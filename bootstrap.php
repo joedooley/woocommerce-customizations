@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name: Plugin Starter
- * Description: WordPress starter plugin utilizing webpack and composer autoloading.
+ * Plugin Name: WooCommerce Customizations
+ * Description: Adds functionality for product category slider.
  * Version:     1.0.0
  * Author:      Developing Designs
  *
- * @package     DevDesigns\PluginStarter
+ * @package     DevDesigns\WoocommerceCustomizations
  * @author      Developing Designs
  * @since       1.0.0
  */
 
-namespace DevDesigns\PluginStarter;
+namespace DevDesigns\WoocommerceCustomizations;
 
 
 
@@ -44,7 +44,7 @@ if ( ! defined( 'PLUGIN_STARTER_URL' ) ) {
  * @since 1.0.0
  */
 add_action( 'plugins_loaded', function (): void {
-	add_action( 'wp_enqueue_scripts', 'DevDesigns\PluginStarter\Assets\Enqueue::enqueue' );
+	add_action( 'wp_enqueue_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::enqueue' );
 } );
 
 

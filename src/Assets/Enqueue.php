@@ -2,12 +2,12 @@
 /**
  * Enqueue webpack compiled js and css.
  *
- * @package     DevDesigns\PluginStarter
+ * @package     DevDesigns\WoocommerceCustomizations
  * @author      Developing Designs
  * @since       1.0.0
  */
 
-namespace DevDesigns\PluginStarter\Assets;
+namespace DevDesigns\WoocommerceCustomizations\Assets;
 
 
 
