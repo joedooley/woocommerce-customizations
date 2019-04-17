@@ -1,5 +1,5 @@
 {
-	"name": "devdesigns/plugin-starter",
+	"name": "devdesigns/woocommerce-customizations",
 	"description": "WordPress starter plugin utilizing webpack and composer autoloading.",
 	"type": "wordpress-plugin",
 	"homepage": "https://developingdesigns.com/",
@@ -33,6 +33,19 @@
 		"psr-4": {
 			"DevDesigns\\WoocommerceCustomizations\\": "src/"
 		},
-		"files": []
+		"files": [
+			"src/helpers.php",
+			"src/setup.php"
+		]
+	},
+	"extra": {
+		"installer-paths": {
+			"../../plugins/{$name}/": [
+				"type:wordpress-plugin"
+			],
+			"../../mu-plugins/{$name}/": [
+				"type:wordpress-muplugin"
+			]
+		}
 	}
 }

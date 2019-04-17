@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: WooCommerce Customizations
+ * Plugin Name: Woocommerce Customizations
  * Description: Adds functionality for product category slider.
  * Version:     1.0.0
  * Author:      Developing Designs
@@ -9,10 +9,6 @@
  * @author      Developing Designs
  * @since       1.0.0
  */
-
-namespace DevDesigns\WoocommerceCustomizations;
-
-
 
 /**
  * Require Composer autoloader.
@@ -29,12 +25,13 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
  *
  * @since 1.0.0
  */
-if ( ! defined( 'PLUGIN_STARTER_VERSION' ) ) {
-	define( 'PLUGIN_STARTER_VERSION', '1.0.0' );
+if ( ! defined( 'WOO_CUSTOMIZATIONS_VERSION' ) ) {
+	define( 'WOO_CUSTOMIZATIONS_VERSION', '1.0.0' );
 }
 
-if ( ! defined( 'PLUGIN_STARTER_URL' ) ) {
-	define( 'PLUGIN_STARTER_URL', plugin_dir_url( __FILE__ ) );
+
+if ( ! defined( 'WOO_CUSTOMIZATIONS_URL' ) ) {
+	define( 'WOO_CUSTOMIZATIONS_URL', plugin_dir_url( __FILE__ ) );
 }
 
 
@@ -44,7 +41,9 @@ if ( ! defined( 'PLUGIN_STARTER_URL' ) ) {
  * @since 1.0.0
  */
 add_action( 'plugins_loaded', function (): void {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
+
 	add_action( 'wp_enqueue_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::enqueue' );
 } );
-
-

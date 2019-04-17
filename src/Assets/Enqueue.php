@@ -19,21 +19,40 @@ class Enqueue {
 
 
 	private static function styles(): void {
-		wp_enqueue_style(
-			'plugin-starter/main.css',
-			PLUGIN_STARTER_URL . '/dist/styles/main.css',
+		wp_register_style(
+			'woocommerce-customizations/swiper.css',
+			WOO_CUSTOMIZATIONS_URL . 'node_modules/swiper/dist/css/swiper.min.css',
 			[],
-			PLUGIN_STARTER_VERSION
+			'4.5.0'
+		);
+
+		// wp_enqueue_style( 'woocommerce-customizations/swiper.css' );
+
+		wp_enqueue_style(
+			'woocommerce-customizations/main.css',
+			WOO_CUSTOMIZATIONS_URL . 'dist/styles/main.css',
+			[],
+			WOO_CUSTOMIZATIONS_VERSION
 		);
 	}
 
 
 	private static function scripts(): void {
-		wp_enqueue_script(
-			'plugin-starter/main.js',
-			PLUGIN_STARTER_URL . '/dist/scripts/main.js',
+		wp_register_script(
+			'woocommerce-customizations/swiper.js',
+			WOO_CUSTOMIZATIONS_URL . 'node_modules/swiper/dist/js/swiper.min.js',
 			[],
-			PLUGIN_STARTER_VERSION,
+			'4.5.0',
+			true
+		);
+
+		// wp_enqueue_script( 'woocommerce-customizations/swiper.js' );
+
+		wp_enqueue_script(
+			'woocommerce-customizations/main.js',
+			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/main.js',
+			[ 'jquery', 'woocommerce-customizations/swiper.js' ],
+			WOO_CUSTOMIZATIONS_VERSION,
 			true
 		);
 	}
