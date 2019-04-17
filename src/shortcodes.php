@@ -100,7 +100,7 @@ add_shortcode( 'wc_product_cat_slider', function ( $atts ): string {
 							 */
 							do_action( 'woocommerce_after_shop_loop_item' ); ?>
 
-							<a href="#" class="options"></a>
+							<p class="buttons-wrap"><a href="#" class="arrow-right"></a></p>
 						</li>
 					<?php endwhile; ?>
 				</ul>

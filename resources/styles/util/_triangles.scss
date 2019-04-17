@@ -1,0 +1,33 @@
+.arrow-up {
+	width: 0;
+	height: 0;
+	border-right: 12px solid $trans1;
+	border-left: 12px solid $trans1;
+	border-bottom: 19px solid $grey2;
+}
+
+.arrow-right {
+	width: 0;
+	height: 0;
+	border-top: 12px solid $trans1;
+	border-bottom: 12px solid $trans1;
+	border-left: 19px solid $grey2;
+	transform-origin: center;
+	transition: transform 300ms ease;
+}
+
+.arrow-down {
+	width: 0;
+	height: 0;
+	border-right: 12px solid $trans1;
+	border-left: 12px solid $trans1;
+	border-top: 19px solid $grey2;
+}
+
+.arrow-left {
+	width: 0;
+	height: 0;
+	border-top: 12px solid $trans1;
+	border-bottom: 12px solid $trans1;
+	border-right: 19px solid $grey2;
+}

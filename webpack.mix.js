@@ -14,9 +14,8 @@ const mix = require('laravel-mix')
 mix
 	.js('resources/scripts/main.js', 'dist/scripts')
 	.sass('resources/styles/main.scss', 'dist/styles')
-	.sourceMaps()
-
-
+	.disableNotifications()
+	.sourceMaps(true, 'source-map')
 
 
 
