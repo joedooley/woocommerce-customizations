@@ -26,7 +26,12 @@ class Enqueue {
 			'4.5.0'
 		);
 
-		// wp_enqueue_style( 'woocommerce-customizations/swiper.css' );
+		wp_enqueue_style(
+			'woocommerce-customizations/google-fonts',
+			'//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700',
+			[],
+			WOO_CUSTOMIZATIONS_VERSION
+		);
 
 		wp_enqueue_style(
 			'woocommerce-customizations/main.css',
@@ -45,8 +50,6 @@ class Enqueue {
 			'4.5.0',
 			true
 		);
-
-		// wp_enqueue_script( 'woocommerce-customizations/swiper.js' );
 
 		wp_enqueue_script(
 			'woocommerce-customizations/main.js',

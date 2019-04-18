@@ -60,7 +60,8 @@ add_shortcode( 'wc_product_cat_slider', function ( $atts ): string {
 						// $product_thumbnail = wp_get_attachment_image_src( $post_thumbnail_id, $size = 'shop-feature' );
 						// $product_thumbnail_alt = get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ); ?>
 
-						<li <?php wc_product_class( 'swiper-slide', $query->post->ID ) ?>>
+						<li
+							<?php wc_product_class( 'swiper-slide', $query->post->ID ) ?>>
 							<?php
 							/**
 							 * Hook: woocommerce_before_shop_loop_item.
@@ -100,7 +101,7 @@ add_shortcode( 'wc_product_cat_slider', function ( $atts ): string {
 							 */
 							do_action( 'woocommerce_after_shop_loop_item' ); ?>
 
-							<p class="buttons-wrap"><a href="#" class="arrow-right"></a></p>
+							<p class="buttons-wrap"><a href="#" class="triangle arrow-right"></a></p>
 						</li>
 					<?php endwhile; ?>
 				</ul>
