@@ -20,6 +20,13 @@ class Enqueue {
 
 	private static function styles(): void {
 		wp_register_style(
+			'woocommerce-customizations/flickity.css',
+			WOO_CUSTOMIZATIONS_URL . 'node_modules/flickity/dist/flickity.min.css',
+			[],
+			'2.2.0'
+		);
+
+		wp_register_style(
 			'woocommerce-customizations/swiper.css',
 			WOO_CUSTOMIZATIONS_URL . 'node_modules/swiper/dist/css/swiper.min.css',
 			[],
@@ -44,6 +51,14 @@ class Enqueue {
 
 	private static function scripts(): void {
 		wp_register_script(
+			'woocommerce-customizations/flickity.js',
+			WOO_CUSTOMIZATIONS_URL . 'node_modules/flickity/dist/flickity.pkgd.min.js',
+			[],
+			'2.2.0',
+			true
+		);
+
+		wp_register_script(
 			'woocommerce-customizations/swiper.js',
 			WOO_CUSTOMIZATIONS_URL . 'node_modules/swiper/dist/js/swiper.min.js',
 			[],
@@ -54,7 +69,7 @@ class Enqueue {
 		wp_enqueue_script(
 			'woocommerce-customizations/main.js',
 			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/main.js',
-			[ 'jquery', 'woocommerce-customizations/swiper.js' ],
+			[ 'woocommerce-customizations/flickity.js', 'woocommerce-customizations/swiper.js' ],
 			WOO_CUSTOMIZATIONS_VERSION,
 			true
 		);
