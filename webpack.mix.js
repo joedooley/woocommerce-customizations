@@ -14,8 +14,10 @@ const mix = require('laravel-mix')
 mix
 	.js('resources/scripts/main.js', 'dist/scripts')
 	.sass('resources/styles/main.scss', 'dist/styles')
-	.disableNotifications()
+	.copy('node_modules/flickity/dist/flickity.pkgd.min.js', 'dist/scripts/vendor')
+	.copy('node_modules/flickity/dist/flickity.min.css', 'dist/styles/vendor')
 	.sourceMaps(true, 'source-map')
+	.disableNotifications()
 	.browserSync({
 		files: [
 			'./*.php',

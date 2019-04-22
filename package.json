@@ -23,7 +23,6 @@
 		"vue-template-compiler": "^2.6.10"
 	},
 	"dependencies": {
-		"flickity": "^2.2.0",
-		"swiper": "^4.5.0"
+		"flickity": "^2.2.0"
 	}
 }
