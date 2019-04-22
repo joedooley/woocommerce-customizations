@@ -1,129 +1,74 @@
-.product-category-slider {
-	display: flex;
-	flex-direction: column;
+.product-category-slider-flickity {
+	opacity: 1;
+	overflow: hidden;
+	padding-bottom: 120px;
+	padding-top: 60px;
+	transition: opacity 0.4s;
 
-	.swiper-navigation-container {
-		align-self: flex-end;
-		display: flex;
-
-		.swiper-button-prev,
-		.swiper-button-next {
-			background-color: $grey4;
-			border-radius: 50%;
-			cursor: pointer;
-			height: 44px;
-			position: static;
-			transition: all 0.2s ease-in-out;
-			-webkit-appearance: button;
-			width: 44px;
-		}
-
-		.swiper-button-next {
-		}
-
-		.swiper-button-prev {
-		}
+	&.is-hidden {
+		opacity: 0;
 	}
 
-	.swiper-container {
-		&.woocommerce {
-			width: 100%;
-			height: 100%;
+	.heading {
+		> * {
+			font-family: $apercuRegular;
+		}
 
-			.products {
-				.product {
-					background-color: $white3;
-					display: flex;
-					flex-direction: column;
-					height: auto;
-					max-width: 260px;
-					padding: 30px 15px;
-					text-align: left;
+		.term-heading {
+			color: $black2;
+			font-size: 32px;
+			margin-bottom: 1rem;
+			margin-top: 4rem;
+			text-transform: capitalize;
+		}
 
-					a img {
-						border: 3px solid $purple1;
-						opacity: 1;
-						transform: scale(1, 1);
-						transition: transform .4s ease-in-out;
-					}
+		.term-link {
+			align-items: center;
+			display: flex;
+			color: $red2;
+			font-size: 15px;
+			margin-left: 5px;
+			text-decoration: none;
+			touch-action: manipulation;
 
-					.woocommerce-loop-product__title {
-						color: $blue1;
-						font-size: 24px;
-						font-family: $ptSansNarrow;
-						letter-spacing: 0.28px;
-					}
+			span {
+				font-size: 10px;
+				margin-left: 5px;
 
-					.price {
-						font-family: $ptSansNarrow;
-						font-size: 14px;
-						font-weight: 400;
-						letter-spacing: 0.17px;
-
-						del {
-							color: $grey3;
-							margin-right: 30px;
-						}
-
-						ins {
-							color: $red1;
-							text-decoration: none;
-						}
-					}
-
-					.buttons-wrap {
-						align-items: center;
-						align-self: flex-start;
-						background-color: $grey1;
-						cursor: pointer;
-						display: flex;
-						height: 38px;
-						justify-content: center;
-						margin-top: auto;
-						margin-bottom: 0;
-						width: 38px;
-					}
-
-					&:nth-child(even) {
-						background-color: $white4;
-						border: 1px solid $white5;
-					}
-
-					&:hover {
-						box-shadow: $productBoxShadow;
-
-						a img {
-							opacity: 0.7;
-							transform: scale(1.05, 1.05);
-						}
-
-						.arrow-right {
-							transform: rotate(-180deg);
-						}
-					}
+				&:before {
+					speak: none;
+					text-transform: none;
+					-webkit-font-smoothing: anti1aliased;
 				}
 			}
 		}
 	}
-}
 
-
-.product-category-slider-flickity {
 	&.woocommerce {
 		position: relative;
 
-		.flickity-slider {
+		.products {
+			padding-bottom: 1rem;
+			padding-top: 1rem;
 			position: static;
+
+			.flickity-viewport {
+				overflow: auto;
+			}
 
 			.product {
 				background-color: $white3;
+				box-shadow: 0 1px 1px rgba(#29435c, 0.2), 0 6px 12px -6px rgba(#29435c, 0.4);
 				display: flex;
 				flex-direction: column;
 				height: 380px;
 				max-width: 260px;
+				overflow-x: auto;
 				padding: 30px 15px;
 				text-align: left;
 				width: 100%;
+				-ms-overflow-style: -ms-autohiding-scrollbar;
+				-webkit-overflow-scrolling: touch;
 
 				a img {
 					border: 3px solid $purple1;
@@ -137,6 +82,7 @@
 					font-size: 24px;
 					font-family: $ptSansNarrow;
 					letter-spacing: 0.28px;
+					margin-bottom: 10px;
 				}
 
 				.price {
@@ -169,7 +115,7 @@
 					width: 38px;
 				}
 
-				&:nth-child(even) {
+				&:nth-child(odd) {
 					background-color: $white4;
 					border: 1px solid $white5;
 				}
@@ -177,9 +123,13 @@
 				&:hover {
 					box-shadow: $productBoxShadow;
 
-					a img {
-						opacity: 0.7;
-						transform: scale(1.05, 1.05);
+					a {
+						text-decoration: none;
+
+						img {
+							opacity: 0.7;
+							transform: scale(1.05, 1.05);
+						}
 					}
 
 					.arrow-right {
@@ -187,20 +137,6 @@
 					}
 				}
 			}
-		}
-	}
-
-	.flickity-prev-next-button {
-		top: 10px;
-		transform: none;
-
-		&.previous {
-			left: auto;
-			right: 60px;
-		}
-
-		&.next {
-			right: 10px;
 		}
 	}
 }

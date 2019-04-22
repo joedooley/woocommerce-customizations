@@ -1,11 +1,19 @@
-import { initSwiperSliders } from './components/product-cat-slider-swiper'
 import { initFlickity } from './components/product-cat-slider-flickity'
 
 
 
 const initSliders = () => {
-	initSwiperSliders(document.querySelectorAll('.product-slider-container'))
-	initFlickity(document.querySelectorAll('.flickity-slider'))
+	const ids = []
+	const sliders = document.querySelectorAll('.product-category-slider-flickity [id^="flickity-slider-"]')
+
+	if (sliders.length) {
+		sliders.forEach(slider => {
+			const id = slider.getAttribute('id')
+			ids.push(`#${id}`)
+		})
+	}
+
+	initFlickity(ids)
 }
 
 

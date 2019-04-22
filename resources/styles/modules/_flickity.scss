@@ -1,0 +1,85 @@
+.flickity-slider {
+	button.flickity-prev-next-button {
+		background-color: $grey4;
+		border: 1px solid $white2;
+		border-radius: 50%;
+		color: $grey5;
+		cursor: pointer;
+		height: 44px;
+		outline: none;
+		position: absolute;
+		text-transform: none;
+		top: 24%;
+		touch-action: manipulation;
+		transform: translateY(-50%);
+		transition: all 0.2s ease-in-out;
+		width: 44px;
+
+		&:hover {
+			background: $white6;
+		}
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0 5px $blue2;
+		}
+
+		&:active {
+			opacity: 0.6;
+		}
+
+		&:disabled {
+			opacity: 0.3;
+			cursor: auto;
+		}
+
+		&.flickity-button {
+			&.previous {
+				left: auto;
+				right: 50px;
+
+				.flickity-rtl & {
+					left: auto;
+					right: 10px;
+				}
+			}
+		}
+
+		&.flickity-button {
+			&.next {
+				right: 0;
+
+				.flickity-rtl & {
+					right: auto;
+					left: 10px;
+				}
+			}
+		}
+
+		svg {
+			position: absolute;
+			left: 20%;
+			top: 20%;
+			width: 60%;
+			height: 60%;
+		}
+
+		.arrow {
+			fill: $black3;
+		}
+	}
+
+	.flickity-page-dots {
+		bottom: 0;
+
+		.dot {
+			width: 5px;
+			height: 5px;
+			margin: 0 3px;
+
+			&.is-selected {
+				opacity: 1;
+			}
+		}
+	}
+}

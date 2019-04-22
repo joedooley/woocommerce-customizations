@@ -16,6 +16,19 @@ mix
 	.sass('resources/styles/main.scss', 'dist/styles')
 	.disableNotifications()
 	.sourceMaps(true, 'source-map')
+	.browserSync({
+		files: [
+			'./*.php',
+			'./**/*.php',
+			'./**/**/*.php',
+			'./**/**/*.js',
+			'./**/**/*.scss'
+		],
+		injectChanges: true,
+		notify: true,
+		proxy: 'https://vintageshop.test:443',
+		ui: false,
+	})
 
 
 

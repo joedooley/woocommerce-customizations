@@ -1,0 +1,20 @@
+@font-face {
+	font-family: 'apercu-regular';
+	src: url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_regular.eot?406");
+	src: url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_regular.eot%23iefix?406") format("embedded-opentype"), url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_regular.woff?406") format("woff"), url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_regular.ttf?406") format("truetype"), url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_regular.svg?406") format("svg");
+	font-weight: normal;
+	font-style: normal
+}
+
+@font-face {
+	font-family: 'apercu-bold';
+	src: url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_bold.eot?406");
+	src: url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_bold.eot%23iefix?406") format("embedded-opentype"), url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_bold.woff?406") format("woff"), url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_bold.ttf?406") format("truetype"), url("//cdn.shopify.com/s/files/1/2100/4737/t/1/assets/apercu_bold.svg?406") format("svg");
+	font-weight: normal;
+	font-style: normal
+}
+
+
+strong {
+	font-family: $apercuBold;
+}
