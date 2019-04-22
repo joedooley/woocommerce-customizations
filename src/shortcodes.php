@@ -7,15 +7,16 @@ use WP_Query;
 
 
 add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
-	ob_start();
-
 	$a = shortcode_atts(
 		[ 'category' => '', 'heading' => 'true' ],
 		$atts,
 		'wc_product_cat_flickity_slider'
 	);
 
+	$id = uniqueId();
 	$termSlug = $a['category'] ?? false;
+	$heading = $a['heading'];
+	$noHeadingClass = $heading !== 'true' ? ' no-heading' : '';
 
 	if ( ! $termSlug ) {
 		errorMessage(
@@ -45,14 +46,15 @@ add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
 		wp_enqueue_style( 'woocommerce-customizations/flickity.css' );
 		wp_enqueue_script( 'woocommerce-customizations/flickity.js' );
 
-		$id = uniqueId(); ?>
+
+		ob_start(); ?>
 
 		<section class="product-category-slider-flickity woocommerce is-hidden">
-			<?php if ( $a['heading'] === 'true' ) : ?>
+			<?php if ( $heading === 'true' ) : ?>
 				<?php echo renderHeading( $termSlug ) ?>
 			<?php endif; ?>
 
-			<div id="<?php echo $id ?>" class="products flickity-slider">
+			<div id="<?php echo $id ?>" class="products flickity-slider <?php echo $noHeadingClass ?>">
 				<?php while ( $query->have_posts() ) : $query->the_post();
 					$initialIndex = (int) round( $query->post_count / 2 );
 					$cssClasses = $initialIndex === $query->current_post ? [ 'flickity-slide', 'flickity-initial-slide' ] : 'flickity-slide'; ?>

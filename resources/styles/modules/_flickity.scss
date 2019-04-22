@@ -1,4 +1,10 @@
 .flickity-slider {
+	&.no-heading {
+		button.flickity-prev-next-button {
+			top: 6%;
+		}
+	}
+
 	button.flickity-prev-next-button {
 		background-color: $grey4;
 		border: 1px solid $white2;
@@ -16,15 +22,15 @@
 		width: 44px;
 
 		&:hover {
-			background: $white6;
+			background: $white5;
 		}
 
 		&:focus {
 			outline: none;
-			box-shadow: 0 0 0 5px $blue2;
 		}
 
 		&:active {
+			background: $white5;
 			opacity: 0.6;
 		}
 
@@ -43,9 +49,7 @@
 					right: 10px;
 				}
 			}
-		}
 
-		&.flickity-button {
 			&.next {
 				right: 0;
 
