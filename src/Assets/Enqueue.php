@@ -36,7 +36,7 @@ class Enqueue {
 		wp_enqueue_style(
 			'woocommerce-customizations/main.css',
 			WOO_CUSTOMIZATIONS_URL . 'dist/styles/main.css',
-			[],
+			[ 'woocommerce-customizations/flickity.css' ],
 			WOO_CUSTOMIZATIONS_VERSION
 		);
 	}
