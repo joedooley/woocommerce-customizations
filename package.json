@@ -16,6 +16,7 @@
 	"devDependencies": {
 		"browser-sync": "^2.26.3",
 		"browser-sync-webpack-plugin": "^2.0.1",
+		"bs-html-injector": "^3.0.3",
 		"laravel-mix": "^4.0.15",
 		"resolve-url-loader": "^2.3.1",
 		"sass": "^1.17.3",

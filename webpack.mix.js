@@ -1,5 +1,15 @@
 const mix = require('laravel-mix')
+const url = require('url')
 
+const target = 'https://vintageshop.test'
+
+
+/**
+ * Enable injection over self-signed SSL certification
+ */
+if (url.parse(target).protocol === 'https:') {
+	process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+}
 
 
 /**
@@ -18,19 +28,7 @@ mix
 	.copy('node_modules/flickity/dist/flickity.min.css', 'dist/styles/vendor')
 	.sourceMaps(true, 'source-map')
 	.disableNotifications()
-	.browserSync({
-		files: [
-			'./*.php',
-			'./**/*.php',
-			'./**/**/*.php',
-			'./**/**/*.js',
-			'./**/**/*.scss'
-		],
-		injectChanges: true,
-		notify: true,
-		proxy: 'https://vintageshop.test:443',
-		ui: false,
-	})
+
 
 
 

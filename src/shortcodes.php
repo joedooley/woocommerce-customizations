@@ -18,15 +18,6 @@ add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
 	$heading = $a['heading'];
 	$noHeadingClass = $heading !== 'true' ? ' no-heading' : '';
 
-	if ( ! $termSlug ) {
-		errorMessage(
-			'Missing shortcode attributes: category or id parameter required. See examples...',
-			'[wc_product_cat_flickity_slider category="category-slug" heading="false"]'
-		);
-
-		return '';
-	}
-
 	$args = [
 		'post_type'      => 'product',
 		'posts_per_page' => - 1,
@@ -45,7 +36,6 @@ add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
 	if ( $query->have_posts() ) :
 		wp_enqueue_style( 'woocommerce-customizations/flickity.css' );
 		wp_enqueue_script( 'woocommerce-customizations/flickity.js' );
-
 
 		ob_start(); ?>
 
@@ -98,11 +88,12 @@ add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
 						 * @hooked woocommerce_template_loop_product_link_close - 5
 						 * @hooked woocommerce_template_loop_add_to_cart - 10
 						 */
-						do_action( 'woocommerce_after_shop_loop_item' ); ?>
+						do_action( 'woocommerce_after_shop_loop_item' );
 
-						<p class="buttons-wrap">
-							<a href="#" class="triangle arrow-right"></a>
-						</p>
+						renderButtonGroup();
+
+
+						?>
 					</article>
 				<?php endwhile; ?>
 			</div>
@@ -180,3 +171,34 @@ function termArchive( string $termSlug, string $tax = 'product_cat' ) {
 function uniqueId (): string {
 	return uniqid( 'flickity-slider-', false );
 }
+
+
+/**
+ * Render error is shortcode attribute isn't provided.
+ *
+ * @since 1.0.0
+ */
+function missingAttributeError () {
+	errorMessage(
+		'Missing shortcode attributes: category or id parameter required. See examples...',
+		'[wc_product_cat_flickity_slider category="category-slug" heading="false"]'
+	);
+}
+
+
+function renderButtonGroup() { ?>
+	<div class="button-group-container">
+		<div class="button-group front">
+			<div class="triangle right"></div>
+		</div>
+		<div class="button-group back">
+			<div class="triangle left"></div>
+			<a href="#" class="square-button preview-popup">Preview Popup</a>
+			<a href="#" class="square-button gallery-popup">Gallery Popup</a>
+			<a href="#" class="square-button add-to-cart">Add to Cart</a>
+			<a href="#" class="square-button open-product">Open Product</a>
+		</div>
+	</div>
+	<?php
+}
+
