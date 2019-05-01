@@ -44,14 +44,9 @@ if ( ! defined( 'WOO_CUSTOMIZATIONS_URL' ) ) {
  * @since 1.0.0
  */
 add_action( 'plugins_loaded', function (): void {
-	if ( ! class_exists( 'WooCommerce' ) ) {
+	if ( ! class_exists( 'WooCommerce' ) || class_exists( 'BeRocket_Product_Preview' )) {
 		return;
 	}
 
-	$slider = new ProductCategorySlider();
-
-	d( $slider );
-
 	add_action( 'wp_enqueue_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::enqueue' );
-	add_shortcode( 'wc_product_cat_flickity_slider', [ $slider, 'render' ] );
 } );

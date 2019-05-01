@@ -97,4 +97,6 @@ return array(
     'Composer\\Installers\\ZendInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/ZendInstaller.php',
     'Composer\\Installers\\ZikulaInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/ZikulaInstaller.php',
     'DevDesigns\\WoocommerceCustomizations\\Assets\\Enqueue' => $baseDir . '/src/Assets/Enqueue.php',
+    'DevDesigns\\WoocommerceCustomizations\\src\\Shortcodes\\HookInterface' => $baseDir . '/src/Shortcodes/HookInterface.php',
+    'DevDesigns\\WoocommerceCustomizations\\src\\Shortcodes\\ProductCategorySlider' => $baseDir . '/src/Shortcodes/ProductCategorySlider.php',
 );
