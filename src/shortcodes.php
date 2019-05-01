@@ -2,6 +2,8 @@
 
 namespace DevDesigns\WoocommerceCustomizations;
 
+use BeRocket_Product_Preview;
+use WC_Product;
 use WP_Query;
 
 
@@ -12,6 +14,8 @@ add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
 		$atts,
 		'wc_product_cat_flickity_slider'
 	);
+
+	d($a);
 
 	$id = uniqueId();
 	$termSlug = $a['category'] ?? false;
@@ -37,6 +41,8 @@ add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
 		wp_enqueue_style( 'woocommerce-customizations/flickity.css' );
 		wp_enqueue_script( 'woocommerce-customizations/flickity.js' );
 
+		$product = wc_get_product( $query->post );
+		d( $product );
 		ob_start(); ?>
 
 		<section class="product-category-slider-flickity woocommerce is-hidden">
@@ -45,63 +51,13 @@ add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
 			<?php endif; ?>
 
 			<div id="<?php echo $id ?>" class="products flickity-slider <?php echo $noHeadingClass ?>">
-				<?php while ( $query->have_posts() ) : $query->the_post();
-					$initialIndex = (int) round( $query->post_count / 2 );
-					$cssClasses = $initialIndex === $query->current_post ? [ 'flickity-slide', 'flickity-initial-slide' ] : 'flickity-slide'; ?>
-
-					<article <?php wc_product_class( $cssClasses, $query->post->ID ) ?>>
-						<?php
-
-						/**
-						 * Hook: woocommerce_before_shop_loop_item.
-						 *
-						 * @hooked woocommerce_template_loop_product_link_open - 10
-						 */
-						do_action( 'woocommerce_before_shop_loop_item' );
-
-						/**
-						 * Hook: woocommerce_before_shop_loop_item_title.
-						 *
-						 * @hooked woocommerce_show_product_loop_sale_flash - 10
-						 * @hooked woocommerce_template_loop_product_thumbnail - 10
-						 */
-						do_action( 'woocommerce_before_shop_loop_item_title' );
-
-						/**
-						 * Hook: woocommerce_shop_loop_item_title.
-						 *
-						 * @hooked woocommerce_template_loop_product_title - 10
-						 */
-						do_action( 'woocommerce_shop_loop_item_title' );
-
-						/**
-						 * Hook: woocommerce_after_shop_loop_item_title.
-						 *
-						 * @hooked woocommerce_template_loop_rating - 5
-						 * @hooked woocommerce_template_loop_price - 10
-						 */
-						do_action( 'woocommerce_after_shop_loop_item_title' );
-
-						/**
-						 * Hook: woocommerce_after_shop_loop_item.
-						 *
-						 * @hooked woocommerce_template_loop_product_link_close - 5
-						 * @hooked woocommerce_template_loop_add_to_cart - 10
-						 */
-						do_action( 'woocommerce_after_shop_loop_item' );
-
-						renderButtonGroup();
-
-
-						?>
-					</article>
+				<?php while ( $query->have_posts() ) : $query->the_post(); ?>
+					<?php wc_get_template_part( 'content', 'product' ); ?>
 				<?php endwhile; ?>
 			</div>
 		</section>
 
-	<?php endif; ?>
-
-	<?php
+	<?php endif;
 
 	$slider = ob_get_clean();
 	wp_reset_query();
@@ -186,19 +142,49 @@ function missingAttributeError () {
 }
 
 
-function renderButtonGroup() { ?>
+/**
+ * Render button groups.
+ *
+ * @since 1.0.0
+ */
+add_action( 'woocommerce_after_shop_loop_item', function (): void {
+	global $wp_query;
+
+	$product = wc_get_product( $wp_query->post );
+	$permalink = get_permalink( $product ); ?>
 	<div class="button-group-container">
 		<div class="button-group front">
 			<div class="triangle right"></div>
 		</div>
 		<div class="button-group back">
 			<div class="triangle left"></div>
-			<a href="#" class="square-button preview-popup">Preview Popup</a>
+			<?php BeRocket_Product_Preview::get_preview_button() ?>
 			<a href="#" class="square-button gallery-popup">Gallery Popup</a>
-			<a href="#" class="square-button add-to-cart">Add to Cart</a>
-			<a href="#" class="square-button open-product">Open Product</a>
+			<a href="<?php echo $product->add_to_cart_url() ?>" class="square-button add-to-cart">Add to Cart</a>
+			<a href="<?php echo $permalink ?>" class="square-button open-product">Open Product</a>
 		</div>
+		<?php echo woocommerce_template_loop_add_to_cart() ?>
+	</div>
+	<?php
+} );
+
+function renderButtonGroups ( WC_Product $product ): void {
+	$permalink = get_permalink( $product->get_id() ); ?>
+	<div class="button-group-container">
+		<div class="button-group front">
+			<div class="triangle right"></div>
+		</div>
+		<div class="button-group back">
+			<div class="triangle left"></div>
+			<?php BeRocket_Product_Preview::get_preview_button() ?>
+			<a href="#" class="square-button gallery-popup">Gallery Popup</a>
+			<a href="<?php echo $product->add_to_cart_url() ?>" class="square-button add-to-cart">Add to Cart</a>
+			<a href="<?php echo $permalink ?>" class="square-button open-product">Open Product</a>
+		</div>
+		<?php echo woocommerce_template_loop_add_to_cart() ?>
 	</div>
 	<?php
 }
+
+
 

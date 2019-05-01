@@ -10,6 +10,9 @@
  * @since       1.0.0
  */
 
+use DevDesigns\WoocommerceCustomizations\src\Shortcodes\ProductCategorySlider;
+
+
 /**
  * Require Composer autoloader.
  *
@@ -45,5 +48,10 @@ add_action( 'plugins_loaded', function (): void {
 		return;
 	}
 
+	$slider = new ProductCategorySlider();
+
+	d( $slider );
+
 	add_action( 'wp_enqueue_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::enqueue' );
+	add_shortcode( 'wc_product_cat_flickity_slider', [ $slider, 'render' ] );
 } );

@@ -70,6 +70,30 @@
 				-ms-overflow-style: -ms-autohiding-scrollbar;
 				-webkit-overflow-scrolling: touch;
 
+				&:nth-of-type(even) {
+					background-color: $white4;
+					border: 1px solid $white5;
+				}
+
+				&:nth-of-type(odd) {
+					.triangle {
+						background-color: $white1;
+					}
+				}
+
+				&:hover {
+					box-shadow: $productBoxShadow;
+
+					a {
+						text-decoration: none;
+
+						img {
+							opacity: 0.7;
+							transform: scale(1.05, 1.05);
+						}
+					}
+				}
+
 				a img {
 					border: 3px solid $purple1;
 					opacity: 1;
@@ -102,28 +126,8 @@
 					}
 				}
 
-				&:nth-child(odd) {
-					background-color: $white4;
-					border: 1px solid $white5;
-				}
-
-				&:hover {
-					box-shadow: $productBoxShadow;
-
-					a {
-						text-decoration: none;
-
-						img {
-							opacity: 0.7;
-							transform: scale(1.05, 1.05);
-						}
-					}
-				}
-
-				.triangle {
-					&:nth-child(even) {
-						background-color: $white1;
-					}
+				.br_product_preview_button:last-of-type {
+					display: none;
 				}
 			}
 		}
