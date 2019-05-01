@@ -44,7 +44,7 @@ if ( ! defined( 'WOO_CUSTOMIZATIONS_URL' ) ) {
  * @since 1.0.0
  */
 add_action( 'plugins_loaded', function (): void {
-	if ( ! class_exists( 'WooCommerce' ) || class_exists( 'BeRocket_Product_Preview' )) {
+	if ( ! class_exists( 'WooCommerce' ) || ! class_exists( 'BeRocket_Product_Preview' )) {
 		return;
 	}
 
