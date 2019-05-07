@@ -139,12 +139,7 @@ class ProductCategorySlider implements HookInterface {
 
 
 	private function getProducts(): void {
-		$this->query = new WP_Query( $this->queryArgs() );
-	}
-
-
-	private function queryArgs(): array {
-		return [
+		$this->query = new WP_Query( [
 			'post_type'      => 'product',
 			'posts_per_page' => - 1,
 			'tax_query'      => [
@@ -155,7 +150,7 @@ class ProductCategorySlider implements HookInterface {
 					'operator' => 'IN'
 				],
 			],
-		];
+		] );
 	}
 
 
