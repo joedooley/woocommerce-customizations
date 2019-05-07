@@ -1,10 +1,4 @@
 .flickity-slider {
-	&.no-heading {
-		button.flickity-prev-next-button {
-			top: 6%;
-		}
-	}
-
 	button.flickity-prev-next-button {
 		background-color: $grey4;
 		border: 1px solid $white2;

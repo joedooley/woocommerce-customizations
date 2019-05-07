@@ -15,17 +15,8 @@
  * @since       1.0.0
  */
 
-/**
- * Plugin Name: WooCommerce Product Preview
- * Plugin URI: http://berocket.com/product/woocommerce-product-preview
- * Description: Plugin for WooCommerce which add quick product preview
- * Version: 2.0.3.9
- * Author: BeRocket
- * Requires at least: 4.0
- * Author URI: http://berocket.com
- * Text Domain: BeRocket_Product_Preview_domain
- * Domain Path: /languages/
- * 333
+
+
 /**
  * Require Composer autoloader.
  *
@@ -62,7 +53,7 @@ if ( ! defined( 'WOO_CUSTOMIZATIONS_PATH' ) ) {
  * @since 1.0.0
  */
 add_action( 'plugins_loaded', function (): void {
-	if ( ! class_exists( 'WooCommerce' ) || ! class_exists( 'BeRocket_Product_Preview' )) {
+	if ( ! class_exists( 'WooCommerce' ) || ! class_exists( 'WC_Quick_View' )) {
 		return;
 	}
 

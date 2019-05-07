@@ -81,13 +81,13 @@ class ProductCategorySlider implements HookInterface {
 		remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
 		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
 		remove_action( 'woocommerce_after_shop_loop_item', [ $GLOBALS['WC_Quick_View'], 'quick_view_button' ], 5 );
-
 	}
 
 
 	private function init (): void {
 		$this->shortcodeAtts();
 		$this->getProducts();
+		self::enqueueAssets();
 	}
 
 
@@ -96,7 +96,6 @@ class ProductCategorySlider implements HookInterface {
 	 */
 	public function render(): string {
 		$id = $this->uniqueId();
-		$noHeadingClass = $this->heading !== 'true' ? ' no-heading' : '';
 		$products = $this->query->posts;
 
 		if ( ! $products ) {
@@ -104,14 +103,12 @@ class ProductCategorySlider implements HookInterface {
 		}
 
 		if ( $this->query->have_posts() ) :
-			ob_start();
-			self::enqueueAssets(); ?>
+			ob_start(); ?>
 
 			<section class="product-category-slider-flickity woocommerce is-hidden">
-				<?php if ( $this->heading === 'true' ) : ?>
-					<?php echo $this->renderHeading( $this->termSlug ) ?>
-				<?php endif; ?>
-				<div id="<?php echo $id ?>" class="products flickity-slider <?php echo $noHeadingClass ?>">
+				<?php echo $this->renderHeading( $this->termSlug ) ?>
+
+				<div id="<?php echo $id ?>" class="products flickity-slider">
 					<?php while ( $this->query->have_posts() ) : $this->query->the_post(); ?>
 						<?php
 
@@ -123,7 +120,6 @@ class ProductCategorySlider implements HookInterface {
 							];
 
 							wc_get_template( 'content-product.php', $args );
-
 						?>
 					<?php endwhile; ?>
 				</div>
@@ -198,8 +194,10 @@ class ProductCategorySlider implements HookInterface {
 	 * @since 1.0.0
 	 */
 	private function termHeading( string $termSlug ): string {
+		$heading = $this->heading !== '' ? $this->heading : $termSlug;
+
 		return $termSlug
-			? "<h2 class='term-heading'>{$termSlug}</h2>"
+			? "<h2 class='term-heading'>{$heading}</h2>"
 			: '';
 	}
 
@@ -225,7 +223,7 @@ class ProductCategorySlider implements HookInterface {
 
 	private function shortcodeAtts(): void {
 		$a = shortcode_atts(
-			[ 'category' => '', 'heading' => 'true' ],
+			[ 'category' => '', 'heading' => '' ],
 			$this->atts,
 			'wc_product_cat_flickity_slider'
 		);
