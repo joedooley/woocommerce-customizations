@@ -9,9 +9,8 @@
 
 namespace DevDesigns\WoocommerceCustomizations\src\Shortcodes;
 
-use BeRocket_Product_Preview;
-use DevDesigns\WoocommerceCustomizations\Shortcodes\ProductPreview;
 use WP_Query;
+
 
 
 class ProductCategorySlider implements HookInterface {
