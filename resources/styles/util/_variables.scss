@@ -38,6 +38,7 @@ $blue2: #09F;
 
 $red1: #D0021B;
 $red2: #ff2a3f;
+$redDisabled: desaturate(lighten($red1, 40%), 21%);
 
 
 // Box Shadows

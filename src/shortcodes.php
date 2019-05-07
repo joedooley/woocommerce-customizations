@@ -12,3 +12,5 @@ add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
 
 	return $slider->render();
 } );
+
+

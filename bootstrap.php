@@ -1,18 +1,31 @@
 <?php
 /**
- * Plugin Name: Woocommerce Customizations
- * Description: Adds functionality for product category slider.
- * Version:     1.0.0
- * Author:      Developing Designs
+ * Plugin Name:  Woocommerce Customizations
+ * Plugin URI:   https://github.com/joedooley/woocommerce-customizations
+ * Description:  Adds functionality for product category slider.
+ * Author:       Developing Designs
+ * Author URI:   https://developingdesigns.com/
+ * Version:      1.0.0
+ * Tested up to: 5.1.1
+ * Text Domain:  wc-customizations
+ * Domain Path:  /lang
  *
  * @package     DevDesigns\WoocommerceCustomizations
  * @author      Developing Designs
  * @since       1.0.0
  */
 
-use DevDesigns\WoocommerceCustomizations\src\Shortcodes\ProductCategorySlider;
-
-
+/**
+ * Plugin Name: WooCommerce Product Preview
+ * Plugin URI: http://berocket.com/product/woocommerce-product-preview
+ * Description: Plugin for WooCommerce which add quick product preview
+ * Version: 2.0.3.9
+ * Author: BeRocket
+ * Requires at least: 4.0
+ * Author URI: http://berocket.com
+ * Text Domain: BeRocket_Product_Preview_domain
+ * Domain Path: /languages/
+ * 333
 /**
  * Require Composer autoloader.
  *
@@ -35,6 +48,11 @@ if ( ! defined( 'WOO_CUSTOMIZATIONS_VERSION' ) ) {
 
 if ( ! defined( 'WOO_CUSTOMIZATIONS_URL' ) ) {
 	define( 'WOO_CUSTOMIZATIONS_URL', plugin_dir_url( __FILE__ ) );
+}
+
+
+if ( ! defined( 'WOO_CUSTOMIZATIONS_PATH' ) ) {
+	define( 'WOO_CUSTOMIZATIONS_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 }
 
 
