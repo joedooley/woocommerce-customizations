@@ -4,19 +4,19 @@ $red: #D0021B;
 $blue: #4A90E2;
 
 
-.button-group-container {
+div.button-group-container {
 	display: flex;
 	height: 38px;
 	justify-content: space-between;
 	margin-top: auto;
 
-	.woocommerce a.added_to_cart {
+	a.added_to_cart {
 		padding-top: 0;
 		display: inline-block;
 	}
 
 	.square-button,
-	.woocommerce a.added_to_cart,
+	a.added_to_cart,
 	a.br_product_preview_button {
 		align-items: center;
 		align-self: flex-start;
@@ -54,7 +54,7 @@ $blue: #4A90E2;
 		}
 	}
 
-	a.br_product_preview_button {
+	.preview-button {
 		background-color: $green;
 
 		&:hover {
@@ -66,8 +66,13 @@ $blue: #4A90E2;
 		background-color: $pink;
 	}
 
-	.add-to-cart {
+	.add-to-cart,
+	a.added_to_cart {
 		background-color: $red;
+
+		&.added {
+			display: none;
+		}
 	}
 
 	.open-product {

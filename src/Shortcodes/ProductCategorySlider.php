@@ -81,6 +81,7 @@ class ProductCategorySlider implements HookInterface {
 	public function addHooks(): void {
 		remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
 		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+		remove_action( 'woocommerce_after_shop_loop_item', [ $GLOBALS['WC_Quick_View'], 'quick_view_button' ], 5 );
 
 	}
 
@@ -98,16 +99,13 @@ class ProductCategorySlider implements HookInterface {
 		$id = $this->uniqueId();
 		$noHeadingClass = $this->heading !== 'true' ? ' no-heading' : '';
 		$products = $this->query->posts;
-		$ids = wp_list_pluck( $products, 'ID' );
 
-		if ( ! $products || ! $ids ) {
+		if ( ! $products ) {
 			return false;
 		}
 
 		if ( $this->query->have_posts() ) :
-
 			ob_start();
-
 			self::enqueueAssets(); ?>
 
 			<section class="product-category-slider-flickity woocommerce is-hidden">
@@ -116,15 +114,18 @@ class ProductCategorySlider implements HookInterface {
 				<?php endif; ?>
 				<div id="<?php echo $id ?>" class="products flickity-slider <?php echo $noHeadingClass ?>">
 					<?php while ( $this->query->have_posts() ) : $this->query->the_post(); ?>
-						<?php $this->product = wc_get_product( $this->query->post );
+						<?php
 
-						$args = [
-							'previewButton' => ProductPreview::get_preview_button(),
-							'addToCartButton' => $this->getAddToCartButton() ?? '',
-							'permalink'       => $this->product->get_permalink() ?? ''
-						];
+							$this->product = wc_get_product( $this->query->post );
 
-						wc_get_template( 'content-product.php', $args ); ?>
+							$args = [
+								'addToCartButton' => $this->getAddToCartButton() ?? '',
+								'permalink'       => $this->product->get_permalink() ?? ''
+							];
+
+							wc_get_template( 'content-product.php', $args );
+
+						?>
 					<?php endwhile; ?>
 				</div>
 			</section>
@@ -157,47 +158,6 @@ class ProductCategorySlider implements HookInterface {
 			],
 		];
 	}
-
-
-	public function renderButtonGroup(): void { ?>
-		<div class="button-group-container">
-			<?php echo self::previewButton() ?>
-			<a href="#" class="square-button gallery-popup">Gallery Popup</a>
-			<?php echo $this->getAddToCartButton(); ?>
-			<a href="<?php echo $this->product->get_permalink() ?>" class="square-button open-product">Open Product</a>
-		</div>
-		<?php
-	}
-
-
-	/**
-	 * @param $id
-	 *
-	 * @return string
-	 */
-	public static function previewButton( int $id ) {
-		global $product, $wp_query, $br_preview_rand, $br_preview_id;
-		wp_enqueue_script( 'wc-single-product' );
-
-		$product_id = br_wc_get_product_id( $product );
-
-		if ( $br_preview_id !== $id ) {
-			$br_preview_rand = rand();
-		}
-
-		$br_preview_id = $id;
-		$dataId = $product_id . $br_preview_rand;
-
-		$button = ProductPreview::get_preview_button();
-		d( $button );
-
-		return sprintf(
-			'<a data-id="%d" class="br_product_preview_button button" href="#preview">%s</a>',
-			$dataId,
-			__( 'Preview Product', 'woocommerce' )
-		);
-	}
-
 
 
 	public function getAddToCartButton(): string {
@@ -260,7 +220,7 @@ class ProductCategorySlider implements HookInterface {
 	 */
 	private function termArchive( string $termSlug, string $tax = 'product_cat' ): string {
 		$termLink = get_term_link( $termSlug, $tax );
-		$termArchiveLabel = __( 'View Collection ', 'woo-customizations' );
+		$termArchiveLabel = __( 'View Collection ', 'woocommerce' );
 		$icon = '<span class="fa fa-chevron-right"></span>';
 
 		return $termLink

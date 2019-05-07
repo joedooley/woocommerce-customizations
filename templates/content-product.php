@@ -67,8 +67,12 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	do_action( 'woocommerce_after_shop_loop_item' );
 
 
+	$previewButton = sprintf(
+		'<a href="%s" class="square-button preview-button quick-view-button button">%s</a>',
+		$GLOBALS['WC_Quick_View']->get_quick_view_url(),
+		__( 'Preview Product', 'woocommerce' )
+	);
 
-	$previewButton = $args['previewButton'];
 	$addToCartButton = $args['addToCartButton'];
 
 	$galleryButton = sprintf(
