@@ -1,5 +1,5 @@
 {
-	"name": "plugin-starter",
+	"name": "woocommerce-customizations",
 	"version": "1.0.0",
 	"description": "WordPress starter plugin utilizing webpack and composer autoloading.",
 	"main": "index.js",

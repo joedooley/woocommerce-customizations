@@ -360,5 +360,10 @@ div.button-group-container .open-product {
   text-decoration: none;
 }
 
+.wc-isotope-filters {
+  display: flex;
+  justify-content: space-between;
+}
+
 
 /*# sourceMappingURL=main.css.map*/

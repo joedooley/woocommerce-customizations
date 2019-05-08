@@ -9,7 +9,6 @@
 
 namespace DevDesigns\WoocommerceCustomizations\src\Shortcodes;
 
-use DevDesigns\WoocommerceCustomizations\Assets\Enqueue;
 use WP_Query;
 
 
@@ -69,7 +68,6 @@ class ProductCategorySlider implements HookInterface {
 		$this->atts = $atts;
 		$this->type = $type;
 
-		add_action( 'wp_enqueue_scripts', [ 'Enqueue', 'enqueue', 9999999 ] );
 		$this->init();
 	}
 
@@ -83,19 +81,20 @@ class ProductCategorySlider implements HookInterface {
 		remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
 		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
 		remove_action( 'woocommerce_after_shop_loop_item', [ $GLOBALS['WC_Quick_View'], 'quick_view_button' ], 5 );
-
-
 	}
 
 
 	private function init (): void {
 		$this->shortcodeAtts();
 		$this->getProducts();
+
 		self::enqueueAssets();
 	}
 
 
 	/**
+	 * Render slider.
+	 *
 	 * @return string
 	 */
 	public function render(): string {
@@ -168,7 +167,7 @@ class ProductCategorySlider implements HookInterface {
 			$this->product->get_sku(),
 			$this->product->add_to_cart_description(),
 			esc_attr( $classes ),
-			esc_html( __( 'Add to Cart', 'wc-customizations' ) )
+			esc_html( __( 'Add to Cart', 'woocommerce' ) )
 		);
 	}
 
@@ -247,9 +246,6 @@ class ProductCategorySlider implements HookInterface {
 	}
 
 
-	/**
-	 *
-	 */
 	private function isPurchasable(): bool {
 		return $this->product->is_purchasable() && $this->product->is_in_stock();
 	}
