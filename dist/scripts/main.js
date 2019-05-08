@@ -3969,6 +3969,25 @@ var initFlickity = function initFlickity() {
 
 /***/ }),
 
+/***/ "./resources/scripts/components/wp-fly-menu.js":
+/*!*****************************************************!*\
+  !*** ./resources/scripts/components/wp-fly-menu.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Override event.preventDefault() within WP Fly Menu when
+ * clicking on top level dropdown menu item with children.
+ *
+ * @since 1.0.0
+ */
+jQuery(document).ready(function ($) {
+  $('a.wpflym-dropdown-toggle').off('click');
+});
+
+/***/ }),
+
 /***/ "./resources/scripts/main.js":
 /*!***********************************!*\
   !*** ./resources/scripts/main.js ***!
@@ -3978,7 +3997,10 @@ var initFlickity = function initFlickity() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_product_cat_slider_flickity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/product-cat-slider-flickity */ "./resources/scripts/components/product-cat-slider-flickity.js");
+/* harmony import */ var _components_wp_fly_menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/wp-fly-menu */ "./resources/scripts/components/wp-fly-menu.js");
+/* harmony import */ var _components_wp_fly_menu__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_components_wp_fly_menu__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_product_cat_slider_flickity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/product-cat-slider-flickity */ "./resources/scripts/components/product-cat-slider-flickity.js");
+
 
 
 var initSliders = function initSliders() {
@@ -3992,7 +4014,7 @@ var initSliders = function initSliders() {
     });
   }
 
-  Object(_components_product_cat_slider_flickity__WEBPACK_IMPORTED_MODULE_0__["initFlickity"])(ids);
+  Object(_components_product_cat_slider_flickity__WEBPACK_IMPORTED_MODULE_1__["initFlickity"])(ids);
 };
 
 window.addEventListener('load', function () {

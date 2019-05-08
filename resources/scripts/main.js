@@ -1,3 +1,4 @@
+import './components/wp-fly-menu'
 import { initFlickity } from './components/product-cat-slider-flickity'
 
 
