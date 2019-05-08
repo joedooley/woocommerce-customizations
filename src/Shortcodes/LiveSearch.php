@@ -123,35 +123,17 @@ class LiveSearch implements HookInterface {
 			ob_start(); ?>
 
 			<div id="<?php echo $filtersId ?>" class="wc-isotope-filters">
-				<div class="ui-group button-group product-cat-terms">
-					<h3><?php echo self::PRODUCT_CAT_TAX_NAME; ?></h3>
-					<div class="button-group js-radio-button-group" data-filter-group="color">
-						<button class="button is-checked" data-filter="">any</button>
-						<button class="button" data-filter=".red">red</button>
-						<button class="button" data-filter=".blue">blue</button>
-						<button class="button" data-filter=".yellow">yellow</button>
+				<?php if ( $terms ): ?>
+					<div class="ui-group button-group product-cat-terms">
+						<h3><?php echo self::PRODUCT_CAT_TAX_NAME; ?></h3>
+						<div class="button-group js-radio-button-group" data-filter-group="color">
+							<button class="button is-checked" data-filter="">any</button>
+							<?php foreach ( $terms as $term ): ?>
+								<button class="button" data-filter="<?php echo sprintf( '.%s', $term->slug ); ?>"><?php echo $term->name; ?></button>
+							<?php endforeach; ?>
+						</div>
 					</div>
-				</div>
-
-				<div class="ui-group button-group wcml-product-attributes-terms">
-					<h3><?php echo self::PRODUCT_ATTS_TAX_NAME; ?></h3>
-					<div class="button-group js-radio-button-group" data-filter-group="size">
-						<button class="button is-checked" data-filter="">any</button>
-						<button class="button" data-filter=".small">small</button>
-						<button class="button" data-filter=".wide">wide</button>
-						<button class="button" data-filter=".big">big</button>
-						<button class="button" data-filter=".tall">tall</button>
-					</div>
-				</div>
-
-				<div class="ui-group button-group product-attributes">
-					<h3>Shape</h3>
-					<div class="button-group js-radio-button-group" data-filter-group="shape">
-						<button class="button is-checked" data-filter="">any</button>
-						<button class="button" data-filter=".round">round</button>
-						<button class="button" data-filter=".square">square</button>
-					</div>
-				</div>
+				<?php endif; ?>
 			</div>
 
 			<div id="<?php echo $productsId ?>" class="wc-isotope-product-grid woocommerce">
