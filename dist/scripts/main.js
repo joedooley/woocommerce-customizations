@@ -3953,7 +3953,7 @@ var flickity = function flickity(el) {
     imagesLoaded: true,
     initialIndex: '.flickity-initial-slide',
     lazyLoad: true,
-    pageDots: false,
+    pageDots: true,
     prevNextButtons: true,
     resize: true,
     wrapAround: true

@@ -26,70 +26,72 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 ?>
 
 
-<li <?php wc_product_class(); ?>>
-	<?php
-	/**
-	 * Hook: woocommerce_before_shop_loop_item.
-	 *
-	 * @hooked woocommerce_template_loop_product_link_open - 10
-	 */
-	do_action( 'woocommerce_before_shop_loop_item' );
+<article <?php wc_product_class(); ?>>
+	<div class="inner">
+		<?php
+		/**
+		 * Hook: woocommerce_before_shop_loop_item.
+		 *
+		 * @hooked woocommerce_template_loop_product_link_open - 10
+		 */
+		do_action( 'woocommerce_before_shop_loop_item' );
 
-	/**
-	 * Hook: woocommerce_before_shop_loop_item_title.
-	 *
-	 * @hooked woocommerce_show_product_loop_sale_flash - 10
-	 * @hooked woocommerce_template_loop_product_thumbnail - 10
-	 */
-	do_action( 'woocommerce_before_shop_loop_item_title' );
+		/**
+		 * Hook: woocommerce_before_shop_loop_item_title.
+		 *
+		 * @hooked woocommerce_show_product_loop_sale_flash - 10
+		 * @hooked woocommerce_template_loop_product_thumbnail - 10
+		 */
+		do_action( 'woocommerce_before_shop_loop_item_title' );
 
-	/**
-	 * Hook: woocommerce_shop_loop_item_title.
-	 *
-	 * @hooked woocommerce_template_loop_product_title - 10
-	 */
-	do_action( 'woocommerce_shop_loop_item_title' );
+		/**
+		 * Hook: woocommerce_shop_loop_item_title.
+		 *
+		 * @hooked woocommerce_template_loop_product_title - 10
+		 */
+		do_action( 'woocommerce_shop_loop_item_title' );
 
-	/**
-	 * Hook: woocommerce_after_shop_loop_item_title.
-	 *
-	 * @hooked woocommerce_template_loop_rating - 5
-	 * @hooked woocommerce_template_loop_price - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop_item_title' );
+		/**
+		 * Hook: woocommerce_after_shop_loop_item_title.
+		 *
+		 * @hooked woocommerce_template_loop_rating - 5
+		 * @hooked woocommerce_template_loop_price - 10
+		 */
+		do_action( 'woocommerce_after_shop_loop_item_title' );
 
-	/**
-	 * Hook: woocommerce_after_shop_loop_item.
-	 *
-	 * @hooked woocommerce_template_loop_product_link_close - 5
-	 * @hooked woocommerce_template_loop_add_to_cart - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop_item' );
+		/**
+		 * Hook: woocommerce_after_shop_loop_item.
+		 *
+		 * @hooked woocommerce_template_loop_product_link_close - 5
+		 * @hooked woocommerce_template_loop_add_to_cart - 10
+		 */
+		do_action( 'woocommerce_after_shop_loop_item' );
 
 
-	$previewButton = sprintf(
-		'<a href="%s" class="square-button preview-button quick-view-button button">%s</a>',
-		$GLOBALS['WC_Quick_View']->get_quick_view_url(),
-		__( 'Preview Product', 'woocommerce' )
-	);
+		$previewButton = sprintf(
+			'<a href="%s" class="square-button preview-button quick-view-button button">%s</a>',
+			$GLOBALS['WC_Quick_View']->get_quick_view_url(),
+			__( 'Preview Product', 'woocommerce' )
+		);
 
-	$addToCartButton = $args['addToCartButton'];
+		$addToCartButton = $args['addToCartButton'];
 
-	$galleryButton = sprintf(
-		'<a href="#" class="square-button gallery-popup">%s</a>',
-		__( 'Open Gallery', 'woocommerce' )
-	);
+		$galleryButton = sprintf(
+			'<a href="#" class="square-button gallery-popup">%s</a>',
+			__( 'Open Gallery', 'woocommerce' )
+		);
 
-	$productButton = sprintf(
-		'<a href="%s" class="square-button open-product">%s</a>',
-		$args['permalink'],
-		__( 'Open Product', 'woocommerce' )
-	); ?>
+		$productButton = sprintf(
+			'<a href="%s" class="square-button open-product">%s</a>',
+			$args['permalink'],
+			__( 'Open Product', 'woocommerce' )
+		); ?>
 
-	<div class="button-group-container">
-		<?php echo $previewButton; ?>
-		<?php echo $galleryButton; ?>
-		<?php echo $addToCartButton; ?>
-		<?php echo $productButton; ?>
+		<div class="button-group-container">
+			<?php echo $previewButton; ?>
+			<?php echo $galleryButton; ?>
+			<?php echo $addToCartButton; ?>
+			<?php echo $productButton; ?>
+		</div>
 	</div>
-</li>
+</article>

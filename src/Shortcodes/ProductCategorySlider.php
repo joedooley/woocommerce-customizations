@@ -105,7 +105,7 @@ class ProductCategorySlider implements HookInterface {
 		if ( $this->query->have_posts() ) :
 			ob_start(); ?>
 
-			<section class="product-category-slider-flickity woocommerce is-hidden">
+			<div class="product-category-slider-flickity woocommerce is-hidden">
 				<?php echo $this->renderHeading( $this->termSlug ) ?>
 
 				<div id="<?php echo $id ?>" class="products flickity-slider">
@@ -123,7 +123,7 @@ class ProductCategorySlider implements HookInterface {
 						?>
 					<?php endwhile; ?>
 				</div>
-			</section>
+			</div>
 
 		<?php endif;
 
