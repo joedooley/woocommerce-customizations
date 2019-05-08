@@ -9,6 +9,7 @@
 
 namespace DevDesigns\WoocommerceCustomizations\src\Shortcodes;
 
+use DevDesigns\WoocommerceCustomizations\Assets\Enqueue;
 use WP_Query;
 
 
@@ -68,6 +69,7 @@ class ProductCategorySlider implements HookInterface {
 		$this->atts = $atts;
 		$this->type = $type;
 
+		add_action( 'wp_enqueue_scripts', [ 'Enqueue', 'enqueue', 9999999 ] );
 		$this->init();
 	}
 
@@ -81,6 +83,8 @@ class ProductCategorySlider implements HookInterface {
 		remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
 		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
 		remove_action( 'woocommerce_after_shop_loop_item', [ $GLOBALS['WC_Quick_View'], 'quick_view_button' ], 5 );
+
+
 	}
 
 
@@ -253,6 +257,10 @@ class ProductCategorySlider implements HookInterface {
 
 	private static function enqueueAssets(): void {
 		wp_enqueue_style( 'woocommerce-customizations/flickity.css' );
+		wp_enqueue_style( 'woocommerce-customizations/google-fonts' );
+		wp_enqueue_style( 'woocommerce-customizations/main.css' );
+
 		wp_enqueue_script( 'woocommerce-customizations/flickity.js' );
+		wp_enqueue_script( 'woocommerce-customizations/main.js' );
 	}
 }

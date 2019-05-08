@@ -26,6 +26,7 @@ mix
 	.sass('resources/styles/main.scss', 'dist/styles')
 	.copy('node_modules/flickity/dist/flickity.pkgd.min.js', 'dist/scripts/vendor')
 	.copy('node_modules/flickity/dist/flickity.min.css', 'dist/styles/vendor')
+	.copy('node_modules/isotope-layout/dist/isotope.pkgd.min.js', 'dist/scripts/vendor')
 	.sourceMaps(true, 'source-map')
 	.disableNotifications()
 

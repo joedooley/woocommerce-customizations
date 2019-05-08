@@ -26,14 +26,14 @@ class Enqueue {
 			'2.2.0'
 		);
 
-		wp_enqueue_style(
+		wp_register_style(
 			'woocommerce-customizations/google-fonts',
 			'//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700',
 			[],
 			WOO_CUSTOMIZATIONS_VERSION
 		);
 
-		wp_enqueue_style(
+		wp_register_style(
 			'woocommerce-customizations/main.css',
 			WOO_CUSTOMIZATIONS_URL . 'dist/styles/main.css',
 			[ 'woocommerce-customizations/flickity.css' ],
@@ -43,6 +43,14 @@ class Enqueue {
 
 
 	private static function scripts(): void {
+		wp_register_script(
+			'woocommerce-customizations/isotope.js',
+			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/vendor/isotope.pkgd.min.js',
+			[ 'jquery' ],
+			'3.0.6',
+			true
+		);
+
 		wp_register_script(
 			'woocommerce-customizations/flickity.js',
 			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/vendor/flickity.pkgd.min.js',
@@ -54,7 +62,7 @@ class Enqueue {
 		wp_enqueue_script(
 			'woocommerce-customizations/main.js',
 			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/main.js',
-			[ 'woocommerce-customizations/flickity.js' ],
+			[ 'woocommerce-customizations/flickity.js', 'woocommerce-customizations/isotope.js' ],
 			WOO_CUSTOMIZATIONS_VERSION,
 			true
 		);
