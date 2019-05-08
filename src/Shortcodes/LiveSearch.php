@@ -32,6 +32,13 @@ class LiveSearch implements HookInterface {
 	protected $product;
 
 	/**
+	 * Reference to active term slug.
+	 *
+	 * @var string
+	 */
+	protected $termSlug;
+
+	/**
 	 * Reference to current product in the loop
 	 *
 	 * @var array
@@ -107,13 +114,8 @@ class LiveSearch implements HookInterface {
 
 		$products = $this->query->posts;
 		$terms = $this->getProductCatTerms();
-		$atts = $this->getAttributesTerms();
 
 		d( $terms );
-		d( $atts );
-		d( wc_get_attribute_taxonomies() );
-
-		// d( $this->query );
 
 		if ( ! $products ) {
 			return false;
@@ -122,31 +124,40 @@ class LiveSearch implements HookInterface {
 		if ( $this->query->have_posts() ) :
 			ob_start(); ?>
 
-			<div id="<?php echo $filtersId ?>" class="wc-isotope-filters">
-				<?php if ( $terms ): ?>
-					<div class="ui-group button-group product-cat-terms">
-						<h3><?php echo self::PRODUCT_CAT_TAX_NAME; ?></h3>
-						<div class="button-group js-radio-button-group" data-filter-group="color">
-							<button class="button is-checked" data-filter="">any</button>
-							<?php foreach ( $terms as $term ): ?>
-								<button class="button" data-filter="<?php echo sprintf( '.%s', $term->slug ); ?>"><?php echo $term->name; ?></button>
-							<?php endforeach; ?>
+			<div class="wc-live-search">
+				<div class="wc-isotope-search">
+					<label for="wc-isotope-search">
+						<input id="wc-isotope-search" class="search-input" placeholder="Search" type="search" />
+					</label>
+				</div>
+				<div id="<?php echo $filtersId ?>" class="wc-isotope-filters">
+					<?php if ( $terms ): ?>
+						<div class="ui-group button-group product-cat-terms">
+							<h3><?php echo self::PRODUCT_CAT_TAX_NAME; ?></h3>
+							<div class="button-group js-radio-button-group" data-filter-group="product_cat">
+								<button class="button is-checked" data-filter="*">All Products</button>
+								<?php foreach ( $terms as $term ): ?>
+									<?php if ( $term->count !== 0 ): ?>
+										<?php $this->termSlug = sprintf( '.product_cat-%s', $term->slug ); ?>
+										<button class="button" data-filter="<?php echo $this->termSlug; ?>"><?php echo $term->name; ?></button>
+									<?php endif; ?>
+								<?php endforeach; ?>
+							</div>
 						</div>
-					</div>
-				<?php endif; ?>
-			</div>
+					<?php endif; ?>
+				</div>
 
-			<div id="<?php echo $productsId ?>" class="wc-isotope-product-grid woocommerce">
-				<?php woocommerce_product_loop_start() ?>
-					<?php while ( $this->query->have_posts() ) : $this->query->the_post(); ?>
-						<?php
-							$this->product = wc_get_product( $this->query->post );
-							wc_get_template_part( 'content', 'product' );
-						?>
-					<?php endwhile; ?>
-				<?php woocommerce_product_loop_end() ?>
+				<div id="<?php echo $productsId ?>" class="wc-isotope-product-grid woocommerce">
+					<?php woocommerce_product_loop_start() ?>
+						<?php while ( $this->query->have_posts() ) : $this->query->the_post(); ?>
+							<?php
+								$this->product = wc_get_product( $this->query->post );
+								wc_get_template( 'content-product-isotope.php', [ 'termSlug' => $this->termSlug ] );
+							?>
+						<?php endwhile; ?>
+					<?php woocommerce_product_loop_end() ?>
+				</div>
 			</div>
-
 		<?php endif;
 
 		$slider = ob_get_clean();

@@ -1,4 +1,5 @@
 import './components/wp-fly-menu'
+import './components/live-search'
 import { initFlickity } from './components/product-cat-slider-flickity'
 
 
