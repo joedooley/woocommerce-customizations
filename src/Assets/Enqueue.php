@@ -33,7 +33,7 @@ class Enqueue {
 			WOO_CUSTOMIZATIONS_VERSION
 		);
 
-		wp_register_style(
+		wp_enqueue_style(
 			'woocommerce-customizations/main.css',
 			WOO_CUSTOMIZATIONS_URL . 'dist/styles/main.css',
 			[ 'woocommerce-customizations/flickity.css' ],
@@ -46,7 +46,7 @@ class Enqueue {
 		wp_register_script(
 			'woocommerce-customizations/isotope.js',
 			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/vendor/isotope.pkgd.min.js',
-			[ 'jquery' ],
+			[],
 			'3.0.6',
 			true
 		);
