@@ -122,7 +122,7 @@ class ProductCategorySlider implements HookInterface {
 								'permalink'       => $this->product->get_permalink() ?? ''
 							];
 
-							wc_get_template( 'content-product.php', $args );
+							wc_get_template( 'content-product-slider.php', $args );
 						?>
 					<?php endwhile; ?>
 				</div>

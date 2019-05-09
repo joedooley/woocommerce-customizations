@@ -2,21 +2,12 @@ import Isotope from 'isotope-layout'
 
 
 
-const filtersElem = document.querySelector('.product-cat-terms')
-const buttonGroups = document.querySelectorAll('.button-group')
-
-const isotope = new Isotope(document.querySelector('.wc-isotope-product-grid'), {
-		itemSelector: '.product',
-//		layoutMode: 'fitRows'
-	}
-)
-
-
 const filterFns = {
 	matchesClass (itemElem) {
 		return itemElem
 	}
 }
+
 
 function radioButtonGroup (buttonGroup) {
 	buttonGroup.addEventListener('click', function (event) {
@@ -31,28 +22,46 @@ function radioButtonGroup (buttonGroup) {
 }
 
 
-filtersElem.addEventListener('click', function (event) {
-	if (!matchesSelector(event.target, 'button')) {
+const toggleIsCheckedClass = () => {
+	const buttonGroups = document.querySelectorAll('.button-group')
+
+	if (!buttonGroups || !buttonGroups.length) {
 		return
 	}
 
-	let filterValue = event.target.getAttribute('data-filter')
-
-	filterValue = filterFns[filterValue] || filterValue
-
-	isotope.arrange({ filter: filterValue })
-})
-
-
-
-let i = 0
-let len = buttonGroups.length
-
-// change is-checked class on buttons
-for ( ; i < len; i++) {
-	const buttonGroup = buttonGroups[i]
-
-	radioButtonGroup(buttonGroup)
+	buttonGroups.forEach(group => {
+		radioButtonGroup(group)
+	})
 }
 
 
+
+const setup = () => {
+	const filtersElem = document.querySelector('.product-cat-terms')
+	const el = document.querySelector('.wc-isotope-product-grid')
+
+	if (!filtersElem || !el) {
+		return
+	}
+
+	const isotope = new Isotope(el, { itemSelector: '.product' })
+
+	filtersElem.addEventListener('click', function (event) {
+		if (!matchesSelector(event.target, 'button')) {
+			return
+		}
+
+		let filterValue = event.target.getAttribute('data-filter')
+
+		filterValue = filterFns[filterValue] || filterValue
+
+		isotope.arrange({ filter: filterValue })
+	})
+}
+
+
+
+export const initIsotope = () => {
+	setup()
+	toggleIsCheckedClass()
+}

@@ -115,7 +115,7 @@ class LiveSearch implements HookInterface {
 		$products = $this->query->posts;
 		$terms = $this->getProductCatTerms();
 
-		d( $terms );
+		// d( $terms );
 
 		if ( ! $products ) {
 			return false;

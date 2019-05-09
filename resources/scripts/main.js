@@ -1,5 +1,6 @@
 import './components/wp-fly-menu'
 import './components/live-search'
+import { initIsotope } from './components/live-search'
 import { initFlickity } from './components/product-cat-slider-flickity'
 
 
@@ -19,7 +20,13 @@ const initSliders = () => {
 }
 
 
+const init = () => {
+	initSliders()
+	initIsotope()
+}
+
+
 window.addEventListener(
 	'load',
-	() => initSliders()
+	() => init()
 )
