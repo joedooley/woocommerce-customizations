@@ -61,8 +61,9 @@
 			.product {
 				background-color: $white1;
 				display: flex;
+				justify-content: center;
 				min-height: 410px;
-				max-width: 300px;
+				max-width: 305px;
 				padding: .5rem;
 				text-align: left;
 				width: 100%;
@@ -70,12 +71,14 @@
 				@media (min-width: 1100px) {
 					-ms-overflow-style: -ms-autohiding-scrollbar;
 					-webkit-overflow-scrolling: touch;
+					max-width: none;
+					width: 25%;
 				}
 
 				.inner {
 					display: flex;
 					flex-direction: column;
-					padding: 55px 30px 20px;
+					padding: 35px 30px 20px;
 					transition: all 0.2s ease-in-out;
 
 					&:hover {
@@ -86,6 +89,10 @@
 							text-decoration: none;
 						}
 					}
+				}
+
+				img {
+					width: 100%;
 				}
 
 				.woocommerce-loop-product__title {

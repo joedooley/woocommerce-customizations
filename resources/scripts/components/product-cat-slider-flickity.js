@@ -30,6 +30,7 @@ export const flickity = el => {
 		prevNextButtons: true,
 		resize: true,
 		wrapAround: true,
+		percentPosition: false
 	})
 }
 
