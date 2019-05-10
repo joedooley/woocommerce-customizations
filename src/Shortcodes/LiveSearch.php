@@ -127,7 +127,7 @@ class LiveSearch implements HookInterface {
 			<div class="wc-live-search">
 				<div class="wc-isotope-search">
 					<label for="wc-isotope-search">
-						<input id="wc-isotope-search" class="search-input" placeholder="Search" type="search" />
+						<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Search" type="search" />
 					</label>
 				</div>
 				<div id="<?php echo $filtersId ?>" class="wc-isotope-filters">

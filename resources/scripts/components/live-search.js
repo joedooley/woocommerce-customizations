@@ -1,11 +1,37 @@
+import debounce from 'lodash-es/debounce'
 import Isotope from 'isotope-layout'
 
+
+
+let qsRegex
+let isotope
 
 
 const filterFns = {
 	matchesClass (itemElem) {
 		return itemElem
 	}
+}
+
+
+let initSearch = function () {
+	const quicksearch = document.querySelector('#wc-isotope-search')
+
+	if (!quicksearch) {
+		return
+	}
+
+	quicksearch.addEventListener('keyup', debounce(() => {
+		qsRegex = new RegExp(quicksearch.value, 'gi')
+
+		isotope.arrange({
+			filter: function (arg1, el) {
+				const title = el.querySelector('.woocommerce-loop-product__title')
+
+				return qsRegex ? title.innerText.match(qsRegex) : true
+			}
+		})
+	}, 200))
 }
 
 
@@ -44,7 +70,7 @@ const setup = () => {
 		return
 	}
 
-	const isotope = new Isotope(el, { itemSelector: '.product' })
+	isotope = new Isotope(el, { itemSelector: '.product' })
 
 	filtersElem.addEventListener('click', function (event) {
 		if (!matchesSelector(event.target, 'button')) {
@@ -52,8 +78,7 @@ const setup = () => {
 		}
 
 		let filterValue = event.target.getAttribute('data-filter')
-
-		filterValue = filterFns[filterValue] || filterValue
+//		filterValue = filterFns[filterValue] || filterValue
 
 		isotope.arrange({ filter: filterValue })
 	})
@@ -63,5 +88,6 @@ const setup = () => {
 
 export const initIsotope = () => {
 	setup()
+	initSearch()
 	toggleIsCheckedClass()
 }

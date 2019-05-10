@@ -25,6 +25,7 @@
 	},
 	"dependencies": {
 		"flickity": "^2.2.0",
-		"isotope-layout": "^3.0.6"
+		"isotope-layout": "^3.0.6",
+		"lodash-es": "^4.17.11"
 	}
 }
