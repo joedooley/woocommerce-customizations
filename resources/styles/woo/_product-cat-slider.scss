@@ -53,7 +53,9 @@
 			position: static;
 
 			.flickity-viewport {
-				overflow: auto;
+				@media (min-width: 1100px) {
+					overflow: auto;
+				}
 			}
 
 			.product {
@@ -64,8 +66,11 @@
 				padding: .5rem;
 				text-align: left;
 				width: 100%;
-				-ms-overflow-style: -ms-autohiding-scrollbar;
-				-webkit-overflow-scrolling: touch;
+
+				@media (min-width: 1100px) {
+					-ms-overflow-style: -ms-autohiding-scrollbar;
+					-webkit-overflow-scrolling: touch;
+				}
 
 				.inner {
 					display: flex;

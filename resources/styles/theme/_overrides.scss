@@ -1,10 +1,19 @@
 body.admin-bar .wpflym-toggle-wrapper {
 	top: 47px;
+
+	@media (max-width: 782px) {
+		top: 62px;
+	}
 }
 
 #div_block-231-28 {
 	flex-direction: row;
 	justify-content: flex-start;
+
+	@media (max-width: 1380px) {
+		transform: translateX(30px);
+	}
+
 
 	.ct-link {
 		flex-wrap: wrap;

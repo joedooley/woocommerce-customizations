@@ -71,6 +71,10 @@
 	.flickity-page-dots {
 		bottom: 80px;
 
+		@media (min-width: 1100px) {
+			display: none;
+		}
+
 		.dot {
 			width: 5px;
 			height: 5px;
