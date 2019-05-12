@@ -20,6 +20,6 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <div class="wc-isotope-search">
 	<label for="wc-isotope-search">
-		<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Search" type="search" />
+		<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Search for products..." type="search" />
 	</label>
 </div>

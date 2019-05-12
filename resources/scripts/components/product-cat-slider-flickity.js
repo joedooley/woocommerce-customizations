@@ -20,17 +20,19 @@ export const flickity = el => {
 		arrowShape: { x0: 30, x1: 50, y1: 25, x2: 60, y2: 25, x3: 40 },
 		draggable: true,
 		freeScroll: true,
-		freeScrollFriction: 0.03,
+		freeScrollFriction: 1.0,
+		friction: 0.15,
 		fullscreen: false,
 		groupCells: true,
 		imagesLoaded: true,
-		initialIndex: '.flickity-initial-slide',
+//		initialIndex: '.flickity-initial-slide',
 		lazyLoad: true,
 		pageDots: true,
+		percentPosition: false,
 		prevNextButtons: true,
 		resize: true,
-		wrapAround: true,
-		percentPosition: false
+		selectedAttraction: 0.01,
+		wrapAround: true
 	})
 }
 
