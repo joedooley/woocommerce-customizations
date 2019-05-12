@@ -52,20 +52,6 @@ class LiveSearch implements HookInterface {
 	 */
 	private const PRODUCT_CAT_TAX_NAME = 'Categories';
 
-	/**
-	 * Name of product_tag taxonomy.
-	 *
-	 * @var string
-	 */
-	private const PRODUCT_TAG_TAX_NAME = 'Tags';
-
-	/**
-	 * Name of product_tag taxonomy.
-	 *
-	 * @var string
-	 */
-	private const PRODUCT_ATTS_TAX_NAME = 'Attributes';
-
 
 	/**
 	 * LiveSearch constructor.
@@ -109,9 +95,6 @@ class LiveSearch implements HookInterface {
 	 * @return string
 	 */
 	public function render(): string {
-		$filtersId = $this->uniqueId( 'filters' );
-		$productsId = $this->uniqueId( 'products' );
-
 		$products = $this->query->posts;
 		$terms = $this->getProductCatTerms();
 
@@ -130,7 +113,7 @@ class LiveSearch implements HookInterface {
 						<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Search" type="search" />
 					</label>
 				</div>
-				<div id="<?php echo $filtersId ?>" class="wc-isotope-filters">
+				<div class="wc-isotope-filters">
 					<?php if ( $terms ): ?>
 						<div class="ui-group button-group product-cat-terms">
 							<h3><?php echo self::PRODUCT_CAT_TAX_NAME; ?></h3>
@@ -147,7 +130,7 @@ class LiveSearch implements HookInterface {
 					<?php endif; ?>
 				</div>
 
-				<div id="<?php echo $productsId ?>" class="wc-isotope-product-grid woocommerce">
+				<div class="wc-isotope-product-grid woocommerce">
 					<?php woocommerce_product_loop_start() ?>
 						<?php while ( $this->query->have_posts() ) : $this->query->the_post(); ?>
 							<?php
@@ -167,6 +150,16 @@ class LiveSearch implements HookInterface {
 	}
 
 
+	public static function renderSearch (): void { ?>
+		<div class="wc-isotope-search">
+			<label for="wc-isotope-search">
+				<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Search" type="search"/>
+			</label>
+		</div>
+	<?php
+	}
+
+
 	private function getProducts(): void {
 		$this->query = new WP_Query( [
 			'post_type'      => 'product',
@@ -175,7 +168,7 @@ class LiveSearch implements HookInterface {
 	}
 
 
-	private function getProductCatTerms (): array {
+	public function getProductCatTerms (): array {
 		$this->productCatTerms = get_terms( [
 			'taxonomy'   => 'product_cat',
 			'hide_empty' => false,
@@ -185,6 +178,22 @@ class LiveSearch implements HookInterface {
 			? $this->productCatTerms
 			: []
 		;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getTermSlug(): string {
+		return $this->termSlug;
+	}
+
+
+	/**
+	 * @param string $termSlug
+	 */
+	public function setTermSlug( string $termSlug ): void {
+		$this->termSlug = $termSlug;
 	}
 
 

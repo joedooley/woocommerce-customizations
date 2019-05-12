@@ -23,8 +23,15 @@ global $product;
 if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
 }
+
+$termSlug = '';
+$terms = get_the_terms( $product->get_id(), 'product_cat' );
+
+if ( $terms && ! is_wp_error( $terms ) ) {
+	$termSlug = sprintf( '.product_cat-%s', $terms[0]->slug );
+}
 ?>
-<li <?php wc_product_class(); ?> data-category="<?php echo $args['termSlug'] ?>">
+<li <?php wc_product_class(); ?> data-category="<?php echo $termSlug ?>">
 	<?php
 	/**
 	 * Hook: woocommerce_before_shop_loop_item.

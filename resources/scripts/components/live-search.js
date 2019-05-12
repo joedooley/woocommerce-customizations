@@ -64,7 +64,8 @@ const toggleIsCheckedClass = () => {
 
 const setup = () => {
 	const filtersElem = document.querySelector('.product-cat-terms')
-	const el = document.querySelector('.wc-isotope-product-grid')
+//	const el = document.querySelector('.wc-isotope-product-grid')
+	const el = document.querySelector('ul.products')
 
 	if (!filtersElem || !el) {
 		return
