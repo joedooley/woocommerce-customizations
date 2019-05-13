@@ -32,18 +32,32 @@ class LiveSearch implements HookInterface {
 	protected $product;
 
 	/**
-	 * Reference to active term slug.
+	 * Reference to current product_cat term slug.
 	 *
 	 * @var string
 	 */
-	protected $termSlug;
+	protected $productCatTermSlug;
 
 	/**
-	 * Reference to current product in the loop
+	 * Reference to current product_tag term slug.
+	 *
+	 * @var string
+	 */
+	protected $productTagTermSlug;
+
+	/**
+	 * Reference to product_cat terms
 	 *
 	 * @var array
 	 */
 	protected $productCatTerms;
+
+	/**
+	 * Reference to product_tag terms
+	 *
+	 * @var array
+	 */
+	protected $productTagTerms;
 
 	/**
 	 * Name of product_cat taxonomy.
@@ -181,19 +195,47 @@ class LiveSearch implements HookInterface {
 	}
 
 
+	public function getProductTagTerms (): array {
+		$this->productTagTerms = get_terms( [
+			'taxonomy'   => 'product_tag',
+			'hide_empty' => false,
+		] );
+
+		return ( is_array( $this->productTagTerms ) && ! $this->productTagTerms instanceof WP_Error )
+			? $this->productTagTerms
+			: [];
+	}
+
+
 	/**
 	 * @return string
 	 */
-	public function getTermSlug(): string {
-		return $this->termSlug;
+	public function getProductCatTermSlug(): string {
+		return $this->productCatTermSlug;
 	}
 
 
 	/**
 	 * @param string $termSlug
 	 */
-	public function setTermSlug( string $termSlug ): void {
-		$this->termSlug = $termSlug;
+	public function setProductCatTermSlug( string $termSlug ): void {
+		$this->productCatTermSlug = $termSlug;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getProductTagTermSlug(): string {
+		return $this->productTagTermSlug;
+	}
+
+
+	/**
+	 * @param string $productTagTermSlug
+	 */
+	public function setProductTagTermSlug( string $productTagTermSlug ): void {
+		$this->productTagTermSlug = $productTagTermSlug;
 	}
 
 

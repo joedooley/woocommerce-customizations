@@ -22,6 +22,7 @@ defined( 'ABSPATH' ) || exit;
 
 $liveSearch = new LiveSearch();
 $terms = $liveSearch->getProductCatTerms();
+$tags = $liveSearch->getProductTagTerms();
 
 ?>
 <div class="wc-isotope-filters">
@@ -32,10 +33,24 @@ $terms = $liveSearch->getProductCatTerms();
 				<?php foreach ( $terms as $term ): ?>
 					<?php if ( $term->count !== 0 ): ?>
 						<?php
-							$termSlug = sprintf( '.product_cat-%s', $term->slug );
-							$liveSearch->setTermSlug( $termSlug );
+							$productCatTermSlug = sprintf( '.product_cat-%s', $term->slug );
+							$liveSearch->setProductCatTermSlug( $productCatTermSlug );
 						?>
-						<button class="button" data-filter="<?php echo $liveSearch->getTermSlug(); ?>"><?php echo $term->name; ?></button>
+						<button class="button" data-filter="<?php echo $liveSearch->getProductCatTermSlug(); ?>"><?php echo $term->name; ?></button>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			</div>
+
+			<div class="button-group js-radio-button-group" data-filter-group="product_tag">
+				<h3>Tags</h3>
+				<a href="#" class="button is-checked" data-filter="*">All Products</a>
+				<?php foreach ( $tags as $tag ): ?>
+					<?php if ( $tag->count !== 0 ): ?>
+						<?php
+						$productTagTermSlug = sprintf( '.product_tag-%s', $tag->slug );
+						$liveSearch->setProductTagTermSlug( $productTagTermSlug );
+						?>
+						<a href="#" class="button" data-filter="<?php echo $liveSearch->getProductTagTermSlug(); ?>"><?php echo $tag->name; ?></a>
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</div>

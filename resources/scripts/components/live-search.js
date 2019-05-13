@@ -69,7 +69,7 @@ const toggleIsHiddenClassForFilters = () => {
 	}
 
 	toggle.addEventListener('click', function (event) {
-		const icon = toggle.querySelector('i.fa')
+		const icon = toggle.querySelector('#arrow-icon')
 		const target = document.querySelector('.wc-isotope-filters')
 
 		event.preventDefault()
@@ -81,13 +81,15 @@ const toggleIsHiddenClassForFilters = () => {
 		}
 
 		if (this.__toggle) {
-			target.style.height = `${ target.scrollHeight }px`
-			icon.classList.remove('fa-angle-down')
-			icon.classList.add('fa-angle-up')
+			target.style.height = `${target.scrollHeight}px`
+			this.classList.add('active')
+			icon.classList.remove('fa-caret-down')
+			icon.classList.add('fa-caret-up')
 		} else {
 			target.style.height = 0
-			icon.classList.remove('fa-angle-up')
-			icon.classList.add('fa-angle-down')
+			this.classList.remove('active')
+			icon.classList.remove('fa-caret-up')
+			icon.classList.add('fa-caret-down')
 		}
 	})
 }

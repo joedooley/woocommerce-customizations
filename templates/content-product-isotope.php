@@ -24,14 +24,21 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
 }
 
-$termSlug = '';
-$terms = get_the_terms( $product->get_id(), 'product_cat' );
+$productCatTermSlug = '';
+$productCatTerms = get_the_terms( $product->get_id(), 'product_cat' );
 
-if ( $terms && ! is_wp_error( $terms ) ) {
-	$termSlug = sprintf( '.product_cat-%s', $terms[0]->slug );
+$productTagTermSlug = '';
+$productTagTerms = get_the_terms( $product->get_id(), 'product_tag' );
+
+if ( $productCatTerms && ! is_wp_error( $productCatTerms ) ) {
+	$productCatTermSlug = sprintf( '.product_cat-%s', $productCatTerms[0]->slug );
+}
+
+if ( $productTagTerms && ! is_wp_error( $productTagTerms ) ) {
+	$productTagTermSlug = sprintf( '.product_tag-%s', $productTagTerms[0]->slug );
 }
 ?>
-<li <?php wc_product_class(); ?> data-category="<?php echo $termSlug ?>">
+<li <?php wc_product_class(); ?> data-category="<?php echo $productCatTermSlug ?>" data-tag="<?php echo $productTagTermSlug ?>">
 	<?php
 	/**
 	 * Hook: woocommerce_before_shop_loop_item.

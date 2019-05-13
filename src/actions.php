@@ -14,3 +14,8 @@ use WP_Query;
 add_action( 'woocommerce_product_query', function ( WP_Query $q ): void {
 	$q->set( 'posts_per_page', - 1 );
 } );
+
+
+
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+add_action( 'woocommerce_after_live_search', 'woocommerce_catalog_ordering' );

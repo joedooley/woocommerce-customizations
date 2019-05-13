@@ -19,10 +19,11 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 <div class="wc-isotope-search">
-	<label for="wc-isotope-search">
-		<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Search for products..." type="search" />
-	</label>
 	<a href="#" id="filter-toggle" class="toggle-filters">
-		<i class="fa fa-angle-down"></i>
+		<i id="menu-icon" class="fa fa-bars"></i>
+		<i id="arrow-icon" class="fa fa-caret-down"></i>
 	</a>
+	<label for="wc-isotope-search">
+		<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Live Search ..." type="search" />
+	</label>
 </div>
