@@ -61,10 +61,40 @@ const toggleIsCheckedClass = () => {
 }
 
 
+const toggleIsHiddenClassForFilters = () => {
+	const toggle = document.querySelector('#filter-toggle')
+
+	if (!toggle) {
+		return
+	}
+
+	toggle.addEventListener('click', function (event) {
+		const icon = toggle.querySelector('i.fa')
+		const target = document.querySelector('.wc-isotope-filters')
+
+		event.preventDefault()
+
+		this.__toggle = !this.__toggle
+
+		if (!target) {
+			return
+		}
+
+		if (this.__toggle) {
+			target.style.height = `${ target.scrollHeight }px`
+			icon.classList.remove('fa-angle-down')
+			icon.classList.add('fa-angle-up')
+		} else {
+			target.style.height = 0
+			icon.classList.remove('fa-angle-up')
+			icon.classList.add('fa-angle-down')
+		}
+	})
+}
+
 
 const setup = () => {
 	const filtersElem = document.querySelector('.product-cat-terms')
-//	const el = document.querySelector('.wc-isotope-product-grid')
 	const el = document.querySelector('ul.products')
 
 	if (!filtersElem || !el) {
@@ -79,7 +109,6 @@ const setup = () => {
 		}
 
 		let filterValue = event.target.getAttribute('data-filter')
-//		filterValue = filterFns[filterValue] || filterValue
 
 		isotope.arrange({ filter: filterValue })
 	})
@@ -91,4 +120,5 @@ export const initIsotope = () => {
 	setup()
 	initSearch()
 	toggleIsCheckedClass()
+	toggleIsHiddenClassForFilters()
 }

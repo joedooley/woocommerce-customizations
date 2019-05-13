@@ -22,4 +22,7 @@ defined( 'ABSPATH' ) || exit;
 	<label for="wc-isotope-search">
 		<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Search for products..." type="search" />
 	</label>
+	<a href="#" id="filter-toggle" class="toggle-filters">
+		<i class="fa fa-angle-down"></i>
+	</a>
 </div>
