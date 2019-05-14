@@ -7,6 +7,18 @@ let qsRegex
 let isotope
 
 
+function getAbsoluteHeight (el) {
+	el = (typeof el === 'string') ? document.querySelector(el) : el
+
+	const styles = window.getComputedStyle(el)
+	const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom'])
+	const padding = parseFloat(styles['paddingTop']) + parseFloat(styles['paddingBottom'])
+	const height = Math.ceil(el.offsetHeight + margin + padding)
+
+	return `${height}px`
+}
+
+
 const filterFns = {
 	matchesClass (itemElem) {
 		return itemElem
@@ -37,9 +49,11 @@ let initSearch = function () {
 
 function radioButtonGroup (buttonGroup) {
 	buttonGroup.addEventListener('click', function (event) {
-		if (!matchesSelector(event.target, 'button')) {
+		if (!matchesSelector(event.target, 'a')) {
 			return
 		}
+
+		event.preventDefault()
 
 		buttonGroup.querySelector('.is-checked').classList.remove('is-checked')
 
@@ -49,13 +63,13 @@ function radioButtonGroup (buttonGroup) {
 
 
 const toggleIsCheckedClass = () => {
-	const buttonGroups = document.querySelectorAll('.button-group')
+	const filterLinkGroups = document.querySelectorAll('.filter-link-group')
 
-	if (!buttonGroups || !buttonGroups.length) {
+	if (!filterLinkGroups || !filterLinkGroups.length) {
 		return
 	}
 
-	buttonGroups.forEach(group => {
+	filterLinkGroups.forEach(group => {
 		radioButtonGroup(group)
 	})
 }
@@ -81,12 +95,14 @@ const toggleIsHiddenClassForFilters = () => {
 		}
 
 		if (this.__toggle) {
-			target.style.height = `${target.scrollHeight}px`
+//			target.style.height = getAbsoluteHeight(target)
+			target.classList.remove('is-hidden')
 			this.classList.add('active')
 			icon.classList.remove('fa-caret-down')
 			icon.classList.add('fa-caret-up')
 		} else {
-			target.style.height = 0
+//			target.style.height = 0
+			target.classList.add('is-hidden')
 			this.classList.remove('active')
 			icon.classList.remove('fa-caret-up')
 			icon.classList.add('fa-caret-down')
@@ -96,23 +112,28 @@ const toggleIsHiddenClassForFilters = () => {
 
 
 const setup = () => {
-	const filtersElem = document.querySelector('.product-cat-terms')
+	const filterLinkGroups = document.querySelectorAll('.filter-link-group')
 	const el = document.querySelector('ul.products')
 
-	if (!filtersElem || !el) {
+	if (!filterLinkGroups || !filterLinkGroups.length || !el) {
 		return
 	}
 
 	isotope = new Isotope(el, { itemSelector: '.product' })
 
-	filtersElem.addEventListener('click', function (event) {
-		if (!matchesSelector(event.target, 'button')) {
-			return
-		}
+	filterLinkGroups.forEach(group => {
+		group.addEventListener('click', function (event) {
+			console.log(event)
+			console.log(event.target)
 
-		let filterValue = event.target.getAttribute('data-filter')
+			if (!matchesSelector(event.target, 'a')) {
+				return
+			}
 
-		isotope.arrange({ filter: filterValue })
+			let filterValue = event.target.getAttribute('data-filter')
+
+			isotope.arrange({ filter: filterValue })
+		})
 	})
 }
 

@@ -22,35 +22,59 @@ defined( 'ABSPATH' ) || exit;
 
 $liveSearch = new LiveSearch();
 $terms = $liveSearch->getProductCatTerms();
+$parentTerms = $liveSearch->getProductCatParentTerms();
+$childTerms = $liveSearch->getProductCatChildTerms();
 $tags = $liveSearch->getProductTagTerms();
+$current = get_queried_object();
+$currentTerm = $current->name;
 
 ?>
-<div class="wc-isotope-filters">
-	<?php if ( $terms ): ?>
-		<div class="ui-group button-group product-cat-terms">
-			<div class="button-group js-radio-button-group" data-filter-group="product_cat">
-				<button class="button is-checked" data-filter="*">All Products</button>
-				<?php foreach ( $terms as $term ): ?>
-					<?php if ( $term->count !== 0 ): ?>
-						<?php
-							$productCatTermSlug = sprintf( '.product_cat-%s', $term->slug );
-							$liveSearch->setProductCatTermSlug( $productCatTermSlug );
-						?>
-						<button class="button" data-filter="<?php echo $liveSearch->getProductCatTermSlug(); ?>"><?php echo $term->name; ?></button>
-					<?php endif; ?>
+<div class="wc-isotope-filters is-hidden">
+	<?php if ( $parentTerms ): ?>
+		<div class="ui-group button-group">
+			<div class="product-cat-terms" data-filter-group="product_cat">
+				<h6>All Products</h6>
+				<?php foreach ( $parentTerms as $parentTerm ): ?>
+					<?php
+						$productCatTermSlug = sprintf( '.product_cat-%s', $parentTerm->slug );
+						$liveSearch->setProductCatTermSlug( $productCatTermSlug );
+						$liveSearch->setProductCatParentTermId( $parentTerm->term_id );
+						$class = $currentTerm === $parentTerm->name ? 'is-checked' : '';
+						$termLink = get_term_link( $parentTerm, 'product_cat' );
+
+					?>
+					<a href="<?php echo $termLink ?>>" class="filter-link <?php echo $class ?>"><?php echo $parentTerm->name; ?></a>
 				<?php endforeach; ?>
 			</div>
+		</div>
+	<?php endif; ?>
 
-			<div class="button-group js-radio-button-group" data-filter-group="product_tag">
-				<h3>Tags</h3>
-				<a href="#" class="button is-checked" data-filter="*">All Products</a>
+	<?php if ( count( $childTerms ) > 0 ): ?>
+		<div class="ui-group button-group">
+			<div class="filter-link-group product-cat-terms" data-filter-group="product_cat">
+				<h6>Subcategories</h6>
+				<?php foreach ( $childTerms as $childTerm ): ?>
+					<?php
+						$slug = sprintf( '.product_cat-%s', $childTerm->slug );
+						$liveSearch->setProductCatTermSlug( $slug );
+					?>
+					<a href="#" class="filter-link" data-filter="<?php echo $liveSearch->getProductCatTermSlug(); ?>"><?php echo $childTerm->name; ?></a>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( $tags ): ?>
+		<div class="ui-group button-group">
+			<div class="filter-link-group product-tag-terms" data-filter-group="product_tag">
+				<h6>Tags</h6>
 				<?php foreach ( $tags as $tag ): ?>
 					<?php if ( $tag->count !== 0 ): ?>
 						<?php
 						$productTagTermSlug = sprintf( '.product_tag-%s', $tag->slug );
 						$liveSearch->setProductTagTermSlug( $productTagTermSlug );
 						?>
-						<a href="#" class="button" data-filter="<?php echo $liveSearch->getProductTagTermSlug(); ?>"><?php echo $tag->name; ?></a>
+						<a href="#" class="filter-link" data-filter="<?php echo $liveSearch->getProductTagTermSlug(); ?>"><?php echo $tag->name; ?></a>
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</div>

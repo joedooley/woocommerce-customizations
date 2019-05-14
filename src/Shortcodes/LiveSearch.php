@@ -32,20 +32,6 @@ class LiveSearch implements HookInterface {
 	protected $product;
 
 	/**
-	 * Reference to current product_cat term slug.
-	 *
-	 * @var string
-	 */
-	protected $productCatTermSlug;
-
-	/**
-	 * Reference to current product_tag term slug.
-	 *
-	 * @var string
-	 */
-	protected $productTagTermSlug;
-
-	/**
 	 * Reference to product_cat terms
 	 *
 	 * @var array
@@ -53,11 +39,46 @@ class LiveSearch implements HookInterface {
 	protected $productCatTerms;
 
 	/**
+	 * Reference to product_cat parent terms
+	 *
+	 * @var array
+	 */
+	protected $productCatParentTerms;
+
+	/**
+	 * Reference to product_cat child terms with term parent of $id arg.
+	 *
+	 * @var array
+	 */
+	protected $productCatChildTerms;
+
+	/**
 	 * Reference to product_tag terms
 	 *
 	 * @var array
 	 */
 	protected $productTagTerms;
+
+	/**
+	 * Reference to current product_cat term slug.
+	 *
+	 * @var string
+	 */
+	protected $productCatTermSlug;
+
+	/**
+	 * Reference to current product_cat parent term id.
+	 *
+	 * @var int
+	 */
+	protected $productCatParentTermId;
+
+	/**
+	 * Reference to current product_tag term slug.
+	 *
+	 * @var string
+	 */
+	protected $productTagTermSlug;
 
 	/**
 	 * Name of product_cat taxonomy.
@@ -185,13 +206,43 @@ class LiveSearch implements HookInterface {
 	public function getProductCatTerms (): array {
 		$this->productCatTerms = get_terms( [
 			'taxonomy'   => 'product_cat',
-			'hide_empty' => false,
 		] );
 
 		return ( is_array( $this->productCatTerms ) && ! $this->productCatTerms instanceof WP_Error )
 			? $this->productCatTerms
 			: []
 		;
+	}
+
+
+	public function getProductCatParentTerms(): array {
+		$this->productCatParentTerms = get_terms( [
+			'taxonomy'   => 'product_cat',
+			'parent'     => 0,
+		] );
+
+		return ( is_array( $this->productCatParentTerms ) && ! $this->productCatParentTerms instanceof WP_Error )
+			? $this->productCatParentTerms
+			: [];
+	}
+
+
+	/**
+	 * Get all child terms with matching parent term id.
+	 *
+	 * @return array
+	 */
+	public function getProductCatChildTerms(): array {
+		$query = get_queried_object();
+
+		$this->productCatChildTerms = get_terms( [
+			'taxonomy'   => 'product_cat',
+			'parent'     => $query->term_id,
+		] );
+
+		return ( is_array( $this->productCatChildTerms ) && ! $this->productCatChildTerms instanceof WP_Error )
+			? $this->productCatChildTerms
+			: [];
 	}
 
 
@@ -236,6 +287,22 @@ class LiveSearch implements HookInterface {
 	 */
 	public function setProductTagTermSlug( string $productTagTermSlug ): void {
 		$this->productTagTermSlug = $productTagTermSlug;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getProductCatParentTermId(): int {
+		return $this->productCatParentTermId;
+	}
+
+
+	/**
+	 * @param int $productCatParentTermId
+	 */
+	public function setProductCatParentTermId( int $productCatParentTermId ): void {
+		$this->productCatParentTermId = $productCatParentTermId;
 	}
 
 
