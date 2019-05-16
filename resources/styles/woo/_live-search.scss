@@ -1,20 +1,34 @@
 .filter-wrap {
 	align-items: center;
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
 	margin-bottom: 30px;
+
+	@media (min-width: 768px) {
+		flex-direction: row;
+	}
 }
 
 body.woocommerce {
 	.woocommerce-ordering {
 		float: none;
 		margin-bottom: 0;
+		margin-top: 1em;
+		width: 100%;
+
+		@media (min-width: 768px) {
+			margin-top: 0;
+			width: auto;
+		}
 
 		select {
 			border: 1px solid #ddd;
 			border-radius: 3px;
 			color: $grey5;
 			height: 40px;
+			margin-top: 0;
+			width: 100%;
 		}
 	}
 }
@@ -23,8 +37,12 @@ body.woocommerce {
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
-	margin-right: 10px;
 	width: 100%;
+
+	@media (min-width: 768px) {
+		flex-direction: row;
+		margin-right: 10px;
+	}
 
 	label {
 		width: 100%;
@@ -77,10 +95,15 @@ body.woocommerce {
 .wc-isotope-filters {
 	box-shadow: 0 6px 4px 0 rgba(74, 74, 74, 0.5);
 	display: flex;
+	flex-direction: column;
 	justify-content: flex-start;
 	padding: 30px 0 50px;
 	overflow: hidden;
 	transition: height, padding 0.3s ease-out;
+
+	@media (min-width: 768px) {
+		flex-direction: row;
+	}
 
 	&.is-hidden {
 		height: 0;
@@ -89,13 +112,19 @@ body.woocommerce {
 	}
 
 	.ui-group {
-		border-right: 1px solid $grey3;
+		margin-bottom: 2em;
 		padding-left: 30px;
 		padding-right: 50px;
 
 		&:last-child {
 			border-right: 0;
+			margin-bottom: 0;
 			padding-right: 0;
+		}
+
+		@media (min-width: 768px) {
+			border-right: 1px solid $grey3;
+			margin-bottom: 0;
 		}
 
 		h6 {
@@ -144,6 +173,7 @@ body.woocommerce {
 .wc-isotope-active-filters {
 	align-items: center;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: flex-start;
 	margin-bottom: 50px;
 	margin-top: 25px;
