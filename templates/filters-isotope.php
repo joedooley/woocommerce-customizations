@@ -43,7 +43,7 @@ $currentTerm = $current->name;
 						$termLink = get_term_link( $parentTerm, 'product_cat' );
 
 					?>
-					<a href="<?php echo $termLink ?>>" class="filter-link <?php echo $class ?>"><?php echo $parentTerm->name; ?></a>
+					<a href="<?php echo $termLink ?>" class="filter-link <?php echo $class ?>"><?php echo $parentTerm->name; ?> <span class="count"><?php echo $parentTerm->count ?></span></a>
 				<?php endforeach; ?>
 			</div>
 		</div>
@@ -58,7 +58,7 @@ $currentTerm = $current->name;
 						$slug = sprintf( '.product_cat-%s', $childTerm->slug );
 						$liveSearch->setProductCatTermSlug( $slug );
 					?>
-					<a href="#" class="filter-link" data-filter="<?php echo $liveSearch->getProductCatTermSlug(); ?>"><?php echo $childTerm->name; ?></a>
+					<a href="#" class="filter-link" data-filter="<?php echo $liveSearch->getProductCatTermSlug(); ?>"><?php echo $childTerm->name; ?> <span class="count"><?php echo $childTerm->count ?></span></a>
 				<?php endforeach; ?>
 			</div>
 		</div>
@@ -74,10 +74,23 @@ $currentTerm = $current->name;
 						$productTagTermSlug = sprintf( '.product_tag-%s', $tag->slug );
 						$liveSearch->setProductTagTermSlug( $productTagTermSlug );
 						?>
-						<a href="#" class="filter-link" data-filter="<?php echo $liveSearch->getProductTagTermSlug(); ?>"><?php echo $tag->name; ?></a>
+						<a href="#" class="filter-link" data-filter="<?php echo $liveSearch->getProductTagTermSlug(); ?>"><?php echo $tag->name; ?>	<span class="count"><?php echo $tag->count ?></span></a>
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</div>
 		</div>
 	<?php endif; ?>
+
+	<div class="ui-group button-group">
+		<div class="filter-link-group product-tag-terms">
+			<h6>Price</h6>
+			<a href="#" class="filter-link" data-filter="upTo50"><?php echo __( '$0 - $50', 'woocommerce' ) ?></a>
+			<a href="#" class="filter-link" data-filter="between50and100"><?php echo __( '$50 - $100', 'woocommerce' ) ?></a>
+			<a href="#" class="filter-link" data-filter="between100and250"><?php echo __( '$100 - $250', 'woocommerce' ) ?></a>
+			<a href="#" class="filter-link" data-filter="between250and500"><?php echo __( '$250 - $500', 'woocommerce' ) ?></a>
+			<a href="#" class="filter-link" data-filter="greaterThan500"><?php echo __( '$500 and up', 'woocommerce' ) ?></a>
+		</div>
+	</div>
 </div>
+
+<div class="wc-isotope-active-filters"></div>

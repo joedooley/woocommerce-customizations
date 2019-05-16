@@ -5,23 +5,122 @@ import Isotope from 'isotope-layout'
 
 let qsRegex
 let isotope
+let filters = {}
 
 
-function getAbsoluteHeight (el) {
-	el = (typeof el === 'string') ? document.querySelector(el) : el
+const removePrefix = string => {
+	return string.startsWith('.product_')
+	       ? string.slice(13).replace('-', ' ')
+	       : string
+}
 
-	const styles = window.getComputedStyle(el)
-	const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom'])
-	const padding = parseFloat(styles['paddingTop']) + parseFloat(styles['paddingBottom'])
-	const height = Math.ceil(el.offsetHeight + margin + padding)
 
-	return `${height}px`
+const addTag = (elementId, html) => {
+	const id = elementId.replace('.', '')
+	const tag = document.createElement('a')
+	const closeButton = document.createElement('span')
+	const container = document.querySelector('.wc-isotope-active-filters')
+
+	if (!container) {
+		return false
+	}
+
+	tag.href = '#'
+	tag.innerHTML = removePrefix(html)
+	tag.setAttribute('id', id)
+
+	closeButton.innerText = 'x'
+	closeButton.setAttribute('data-filter', elementId)
+
+	tag.appendChild(closeButton)
+	container.appendChild(tag)
+}
+
+
+const removeTag = id => {
+	id = id.replace('.', '')
+
+	const el = document.querySelector(`.wc-isotope-active-filters #${id}`)
+	if (el) {
+		el.parentNode.removeChild(el)
+	}
 }
 
 
 const filterFns = {
-	matchesClass (itemElem) {
-		return itemElem
+	upTo50 (arg1, el) {
+		const priceEl = el.querySelector('.amount')
+		const salePriceEl = el.querySelector('.price ins .amount')
+
+		if (!priceEl && !salePriceEl) {
+			return false
+		}
+
+		const price     = parseInt(priceEl.innerText, 10)
+		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+		const amount    = salePrice ? salePrice : price
+
+		return amount > 0 && amount <= 50
+	},
+
+	between50and100 (arg1, el) {
+		const priceEl = el.querySelector('.amount')
+		const salePriceEl = el.querySelector('.price ins .amount')
+
+		if (!priceEl && !salePriceEl) {
+			return false
+		}
+
+		const price = parseInt(priceEl.innerText, 10)
+		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+		const amount    = salePrice ? salePrice : price
+
+		return amount >= 50 && amount <= 100
+	},
+
+	between100and250 (arg1, el) {
+		const priceEl = el.querySelector('.amount')
+		const salePriceEl = el.querySelector('.price ins .amount')
+
+		if (!priceEl && !salePriceEl) {
+			return false
+		}
+
+		const price = parseInt(priceEl.innerText, 10)
+		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+		const amount    = salePrice ? salePrice : price
+
+		return amount >= 100 && amount <= 250
+	},
+
+	between250and500 (arg1, el) {
+		const priceEl = el.querySelector('.amount')
+		const salePriceEl = el.querySelector('.price ins .amount')
+
+		if (!priceEl && !salePriceEl) {
+			return false
+		}
+
+		const price = parseInt(priceEl.innerText, 10)
+		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+		const amount    = salePrice ? salePrice : price
+
+		return amount >= 250 && amount <= 500
+	},
+
+	greaterThan500 (arg1, el) {
+		const priceEl = el.querySelector('.amount')
+		const salePriceEl = el.querySelector('.price ins .amount')
+
+		if (!priceEl && !salePriceEl) {
+			return false
+		}
+
+		const price = parseInt(priceEl.innerText, 10)
+		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+		const amount    = salePrice ? salePrice : price
+
+		return amount >= 500
 	}
 }
 
@@ -47,15 +146,21 @@ let initSearch = function () {
 }
 
 
-function radioButtonGroup (buttonGroup) {
-	buttonGroup.addEventListener('click', function (event) {
+function radioButtonGroup (filterLinkGroup) {
+	filterLinkGroup.addEventListener('click', function (event) {
+		console.log(event)
+		console.log(event.target)
+		console.log(filterLinkGroup)
+
 		if (!matchesSelector(event.target, 'a')) {
 			return
 		}
 
 		event.preventDefault()
 
-		buttonGroup.querySelector('.is-checked').classList.remove('is-checked')
+//		if (filterLinkGroup.querySelector('.is-checked').classList.contains('is-checked')) {
+//			filterLinkGroup.querySelector('.is-checked').classList.remove('is-checked')
+//		}
 
 		event.target.classList.add('is-checked')
 	})
@@ -95,13 +200,11 @@ const toggleIsHiddenClassForFilters = () => {
 		}
 
 		if (this.__toggle) {
-//			target.style.height = getAbsoluteHeight(target)
 			target.classList.remove('is-hidden')
 			this.classList.add('active')
 			icon.classList.remove('fa-caret-down')
 			icon.classList.add('fa-caret-up')
 		} else {
-//			target.style.height = 0
 			target.classList.add('is-hidden')
 			this.classList.remove('active')
 			icon.classList.remove('fa-caret-up')
@@ -112,8 +215,9 @@ const toggleIsHiddenClassForFilters = () => {
 
 
 const setup = () => {
-	const filterLinkGroups = document.querySelectorAll('.filter-link-group')
+	const inclusives = []
 	const el = document.querySelector('ul.products')
+	const filterLinkGroups = document.querySelectorAll('.filter-link-group')
 
 	if (!filterLinkGroups || !filterLinkGroups.length || !el) {
 		return
@@ -131,6 +235,23 @@ const setup = () => {
 			}
 
 			let filterValue = event.target.getAttribute('data-filter')
+			console.log(filterValue)
+			console.log(inclusives)
+
+			if (!inclusives.includes(filterValue)) {
+				inclusives.push(filterValue)
+				addTag(filterValue, filterValue)
+			} else {
+				inclusives.splice(filterValue.indexOf(filterValue), 1)
+				removeTag(filterValue)
+			}
+
+			console.log(inclusives)
+
+			filterValue = inclusives.length ? inclusives.join(', ') : '*'
+			filterValue = filterFns[filterValue] || filterValue
+
+			console.log(filterValue)
 
 			isotope.arrange({ filter: filterValue })
 		})

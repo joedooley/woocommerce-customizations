@@ -76,11 +76,6 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 
 		$addToCartButton = $args['addToCartButton'];
 
-		$galleryButton = sprintf(
-			'<a href="#" class="square-button gallery-popup">%s</a>',
-			__( 'Open Gallery', 'woocommerce' )
-		);
-
 		$productButton = sprintf(
 			'<a href="%s" class="square-button open-product">%s</a>',
 			$args['permalink'],
@@ -89,7 +84,6 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 
 		<div class="button-group-container">
 			<?php echo $previewButton; ?>
-			<?php echo $galleryButton; ?>
 			<?php echo $addToCartButton; ?>
 			<?php echo $productButton; ?>
 		</div>

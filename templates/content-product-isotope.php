@@ -37,45 +37,69 @@ if ( $productCatTerms && ! is_wp_error( $productCatTerms ) ) {
 if ( $productTagTerms && ! is_wp_error( $productTagTerms ) ) {
 	$productTagTermSlug = sprintf( '.product_tag-%s', $productTagTerms[0]->slug );
 }
+
+$previewButton = sprintf(
+	'<a href="%s" class="square-button preview-button quick-view-button button">%s</a>',
+	$GLOBALS['WC_Quick_View']->get_quick_view_url(),
+	__( 'Preview Product', 'woocommerce' )
+);
+
+$productButton = sprintf(
+	'<a href="%s" class="square-button open-product">%s</a>',
+	$product->get_permalink(),
+	__( 'Open Product', 'woocommerce' )
+);
+
 ?>
-<li <?php wc_product_class(); ?> data-category="<?php echo $productCatTermSlug ?>" data-tag="<?php echo $productTagTermSlug ?>">
-	<?php
-	/**
-	 * Hook: woocommerce_before_shop_loop_item.
-	 *
-	 * @hooked woocommerce_template_loop_product_link_open - 10
-	 */
-	do_action( 'woocommerce_before_shop_loop_item' );
+<li <?php wc_product_class(); ?> data-category="<?php echo $productCatTermSlug ?>"
+                                 data-tag="<?php echo $productTagTermSlug ?>"
+                                 xmlns="http://www.w3.org/1999/html">
+	<div class="inner">
+		<?php
+		/**
+		 * Hook: woocommerce_before_shop_loop_item.
+		 *
+		 * @hooked woocommerce_template_loop_product_link_open - 10
+		 */
+		do_action( 'woocommerce_before_shop_loop_item' );
 
-	/**
-	 * Hook: woocommerce_before_shop_loop_item_title.
-	 *
-	 * @hooked woocommerce_show_product_loop_sale_flash - 10
-	 * @hooked woocommerce_template_loop_product_thumbnail - 10
-	 */
-	do_action( 'woocommerce_before_shop_loop_item_title' );
+		/**
+		 * Hook: woocommerce_before_shop_loop_item_title.
+		 *
+		 * @hooked woocommerce_show_product_loop_sale_flash - 10
+		 * @hooked woocommerce_template_loop_product_thumbnail - 10
+		 */
+		do_action( 'woocommerce_before_shop_loop_item_title' );
 
-	/**
-	 * Hook: woocommerce_shop_loop_item_title.
-	 *
-	 * @hooked woocommerce_template_loop_product_title - 10
-	 */
-	do_action( 'woocommerce_shop_loop_item_title' );
+		/**
+		 * Hook: woocommerce_shop_loop_item_title.
+		 *
+		 * @hooked woocommerce_template_loop_product_title - 10
+		 */
+		do_action( 'woocommerce_shop_loop_item_title' );
 
-	/**
-	 * Hook: woocommerce_after_shop_loop_item_title.
-	 *
-	 * @hooked woocommerce_template_loop_rating - 5
-	 * @hooked woocommerce_template_loop_price - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop_item_title' );
+		/**
+		 * Hook: woocommerce_after_shop_loop_item_title.
+		 *
+		 * @hooked woocommerce_template_loop_rating - 5
+		 * @hooked woocommerce_template_loop_price - 10
+		 */
+		do_action( 'woocommerce_after_shop_loop_item_title' );
 
-	/**
-	 * Hook: woocommerce_after_shop_loop_item.
-	 *
-	 * @hooked woocommerce_template_loop_product_link_close - 5
-	 * @hooked woocommerce_template_loop_add_to_cart - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop_item' );
-	?>
+		/**
+		 * Hook: woocommerce_after_shop_loop_item.
+		 *
+		 * @hooked woocommerce_template_loop_product_link_close - 5
+		 * @hooked woocommerce_template_loop_add_to_cart - 10
+		 */
+		// do_action( 'woocommerce_after_shop_loop_item' );
+		?>
+		</a>
+		<div class="button-group-container">
+			<?php echo $previewButton; ?>
+			<?php echo woocommerce_template_loop_add_to_cart(); ?>
+			<?php echo $productButton; ?>
+		</div>
+
+	</div>
 </li>

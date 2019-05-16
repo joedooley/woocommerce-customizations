@@ -17,6 +17,8 @@ div.button-group-container {
 
 	.square-button,
 	a.added_to_cart,
+	a.add_to_cart_button,
+	a.ajax_add_to_cart,
 	a.br_product_preview_button {
 		align-items: center;
 		align-self: flex-start;
@@ -51,6 +53,10 @@ div.button-group-container {
 			&:hover {
 				opacity: 0.8;
 			}
+		}
+
+		&.added {
+			display: none;
 		}
 	}
 
