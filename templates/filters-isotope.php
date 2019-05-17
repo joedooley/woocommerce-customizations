@@ -32,7 +32,7 @@ $currentTerm = $current->name;
 <div class="wc-isotope-filters is-hidden">
 	<?php if ( $parentTerms ): ?>
 		<div class="ui-group button-group">
-			<div class="product-cat-terms" data-filter-group="product_cat">
+			<div class="product-cat-terms">
 				<h6>All Products</h6>
 				<?php foreach ( $parentTerms as $parentTerm ): ?>
 					<?php
@@ -41,9 +41,8 @@ $currentTerm = $current->name;
 						$liveSearch->setProductCatParentTermId( $parentTerm->term_id );
 						$class = $currentTerm === $parentTerm->name ? 'is-checked' : '';
 						$termLink = get_term_link( $parentTerm, 'product_cat' );
-
 					?>
-					<a href="<?php echo $termLink ?>" class="filter-link <?php echo $class ?>"><?php echo $parentTerm->name; ?> <span class="count"><?php echo $parentTerm->count ?></span></a>
+					<a href="<?php echo $termLink ?>" class="term-link <?php echo $class ?>"><?php echo $parentTerm->name; ?> <span class="count"><?php echo $parentTerm->count ?></span></a>
 				<?php endforeach; ?>
 			</div>
 		</div>
@@ -51,7 +50,7 @@ $currentTerm = $current->name;
 
 	<?php if ( count( $childTerms ) > 0 ): ?>
 		<div class="ui-group button-group">
-			<div class="filter-link-group product-cat-terms" data-filter-group="product_cat">
+			<div class="filter-link-group product-cat-terms" data-filter-group="cat">
 				<h6>Subcategories</h6>
 				<?php foreach ( $childTerms as $childTerm ): ?>
 					<?php
@@ -66,7 +65,7 @@ $currentTerm = $current->name;
 
 	<?php if ( $tags ): ?>
 		<div class="ui-group button-group">
-			<div class="filter-link-group product-tag-terms" data-filter-group="product_tag">
+			<div class="filter-link-group product-tag-terms" data-filter-group="tag">
 				<h6>Tags</h6>
 				<?php foreach ( $tags as $tag ): ?>
 					<?php if ( $tag->count !== 0 ): ?>
@@ -82,13 +81,13 @@ $currentTerm = $current->name;
 	<?php endif; ?>
 
 	<div class="ui-group button-group">
-		<div class="filter-link-group product-tag-terms">
+		<div class="filter-link-group product-tag-terms" data-filter-group="price">
 			<h6>Price</h6>
-			<a href="#" class="filter-link" data-filter="upTo50"><?php echo __( '$0 - $50', 'woocommerce' ) ?></a>
-			<a href="#" class="filter-link" data-filter="between50and100"><?php echo __( '$50 - $100', 'woocommerce' ) ?></a>
-			<a href="#" class="filter-link" data-filter="between100and250"><?php echo __( '$100 - $250', 'woocommerce' ) ?></a>
-			<a href="#" class="filter-link" data-filter="between250and500"><?php echo __( '$250 - $500', 'woocommerce' ) ?></a>
-			<a href="#" class="filter-link" data-filter="greaterThan500"><?php echo __( '$500 and up', 'woocommerce' ) ?></a>
+			<a href="#" class="filter-link" data-filter="upTo50"><?php echo __( '$0 - $50', 'woocommerce' ) ?> <span class="count"></span></a>
+			<a href="#" class="filter-link" data-filter="between50and100"><?php echo __( '$50 - $100', 'woocommerce' ) ?> <span class="count"></span></a>
+			<a href="#" class="filter-link" data-filter="between100and250"><?php echo __( '$100 - $250', 'woocommerce' ) ?> <span class="count"></span></a>
+			<a href="#" class="filter-link" data-filter="between250and500"><?php echo __( '$250 - $500', 'woocommerce' ) ?> <span class="count"></span></a>
+			<a href="#" class="filter-link" data-filter="greaterThan500"><?php echo __( '$500 and up', 'woocommerce' ) ?> <span class="count"></span></a>
 		</div>
 	</div>
 </div>

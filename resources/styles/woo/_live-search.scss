@@ -142,24 +142,28 @@ body.woocommerce {
 		&:last-of-type {
 			margin-right: 0;
 		}
-	}
 
-	.filter-link {
-		align-items: center;
-		color: $grey5;
-		display: flex;
-		font-size: 16px;
-		justify-content: space-between;
-		text-decoration: none;
+		a {
+			align-items: center;
+			color: $grey5;
+			display: flex;
+			font-size: 16px;
+			justify-content: space-between;
+			text-decoration: none;
 
-		&:hover,
-		&:active,
-		&.is-checked {
-			color: $green3;
-		}
+			&:hover,
+			&:active,
+			&.is-checked {
+				color: $green3;
+			}
 
-		&.is-checked {
-			font-weight: bold;
+			&.is-checked {
+				font-weight: bold;
+			}
+
+			&.disabled {
+				cursor: not-allowed;
+			}
 		}
 	}
 
@@ -177,6 +181,7 @@ body.woocommerce {
 	justify-content: flex-start;
 	margin-bottom: 50px;
 	margin-top: 25px;
+	padding: 20px 0;
 
 	a {
 		background-color: $grey5;

@@ -1,11 +1,23 @@
+import Isotope  from 'isotope-layout'
 import debounce from 'lodash-es/debounce'
-import Isotope from 'isotope-layout'
 
 
 
 let qsRegex
 let isotope
+let items = false
 let filters = {}
+const inclusives = []
+
+
+const concatValues = object => {
+	let value = ''
+	for (const prop in object) {
+		value += object[prop]
+	}
+
+	return value
+}
 
 
 const removePrefix = string => {
@@ -33,14 +45,27 @@ const addTag = (elementId, html) => {
 	closeButton.setAttribute('data-filter', elementId)
 
 	tag.appendChild(closeButton)
+
+	tag.addEventListener('click', function (event) {
+		event.preventDefault()
+
+		inclusives.splice(elementId.indexOf(elementId), 1)
+		removeTag(tag.id)
+
+		elementId = inclusives.length ? inclusives.join(', ') : '*'
+		elementId = filterFns[elementId] || elementId
+
+		isotope.arrange({ filter: elementId })
+	})
+
 	container.appendChild(tag)
 }
 
 
 const removeTag = id => {
 	id = id.replace('.', '')
+	const el = document.querySelector(`.wc-isotope-active-filters #${ id }`)
 
-	const el = document.querySelector(`.wc-isotope-active-filters #${id}`)
 	if (el) {
 		el.parentNode.removeChild(el)
 	}
@@ -148,19 +173,15 @@ let initSearch = function () {
 
 function radioButtonGroup (filterLinkGroup) {
 	filterLinkGroup.addEventListener('click', function (event) {
-		console.log(event)
-		console.log(event.target)
-		console.log(filterLinkGroup)
-
 		if (!matchesSelector(event.target, 'a')) {
 			return
 		}
 
 		event.preventDefault()
 
-//		if (filterLinkGroup.querySelector('.is-checked').classList.contains('is-checked')) {
-//			filterLinkGroup.querySelector('.is-checked').classList.remove('is-checked')
-//		}
+		if (filterLinkGroup.querySelector('.filter-link').classList.contains('is-checked')) {
+			filterLinkGroup.querySelector('.filter-link').classList.remove('is-checked')
+		}
 
 		event.target.classList.add('is-checked')
 	})
@@ -214,8 +235,56 @@ const toggleIsHiddenClassForFilters = () => {
 }
 
 
+const updateEachCounts = () => {
+	const filterLinks = document.querySelectorAll('.filter-link')
+
+	if (!filterLinks || !filterLinks.length) {
+		return
+	}
+
+	filterLinks.forEach(link => {
+		let total
+		const count = link.querySelector('.count')
+		const filterValue = link.getAttribute('data-filter')
+		const formattedFilterValue = filterValue.replace('.', '')
+
+		if (typeof filterFns[filterValue] === 'function') {
+			total = items.filter(({ element }) => filterFns[filterValue](arguments, element)).length
+		} else {
+			total = items.filter(({ element }) => element.classList.contains(formattedFilterValue)).length
+		}
+
+		if (total === 0) {
+			link.classList.add('disabled')
+		}
+
+		if (total !== 0 && link.classList.contains('disabled')) {
+			link.classList.remove('disabled')
+		}
+
+		count.innerText = total
+	})
+}
+
+
+const updateTotalCount = () => {
+	const el = document.querySelector('.woocommerce-result-count')
+
+	if (!el) {
+		return
+	}
+
+	isotope.on('arrangeComplete', filteredItems => {
+		items       = filteredItems
+		const total = items.length
+
+		el.innerText = `Showing all ${ total } results`
+		updateEachCounts()
+	})
+}
+
+
 const setup = () => {
-	const inclusives = []
 	const el = document.querySelector('ul.products')
 	const filterLinkGroups = document.querySelectorAll('.filter-link-group')
 
@@ -224,17 +293,17 @@ const setup = () => {
 	}
 
 	isotope = new Isotope(el, { itemSelector: '.product' })
+	items = isotope.filteredItems
 
 	filterLinkGroups.forEach(group => {
 		group.addEventListener('click', function (event) {
-			console.log(event)
-			console.log(event.target)
-
 			if (!matchesSelector(event.target, 'a')) {
 				return
 			}
 
 			let filterValue = event.target.getAttribute('data-filter')
+			const filterGroup = group.getAttribute('data-filter-group')
+			filters[filterGroup] = filterValue
 			console.log(filterValue)
 			console.log(inclusives)
 
@@ -249,6 +318,9 @@ const setup = () => {
 			console.log(inclusives)
 
 			filterValue = inclusives.length ? inclusives.join(', ') : '*'
+			console.log(filterValue)
+			console.log(concatValues(filters))
+
 			filterValue = filterFns[filterValue] || filterValue
 
 			console.log(filterValue)
@@ -256,6 +328,8 @@ const setup = () => {
 			isotope.arrange({ filter: filterValue })
 		})
 	})
+
+	updateTotalCount()
 }
 
 
@@ -265,4 +339,5 @@ export const initIsotope = () => {
 	initSearch()
 	toggleIsCheckedClass()
 	toggleIsHiddenClassForFilters()
+	updateEachCounts()
 }

@@ -1,5 +1,5 @@
-body.woocommerce,
-body.woocommerce-page {
+body.woocommerce.archive,
+body.woocommerce-page.archive {
 	ul.products,
 	ul.products[class*=columns-] {
 		margin: 0 50px;
@@ -78,6 +78,22 @@ body.woocommerce-page {
 
 			.button {
 				margin-top: 0;
+			}
+
+			.add_to_cart_button {
+				background-color: $red;
+			}
+		}
+	}
+}
+
+body.single-product {
+	.related {
+		ul.products {
+			li.product {
+				.quick-view-button {
+					display: none;
+				}
 			}
 		}
 	}
