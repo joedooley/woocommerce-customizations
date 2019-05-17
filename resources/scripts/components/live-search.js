@@ -6,24 +6,34 @@ import debounce from 'lodash-es/debounce'
 let qsRegex
 let isotope
 let items = false
-let filters = {}
 const inclusives = []
-
-
-const concatValues = object => {
-	let value = ''
-	for (const prop in object) {
-		value += object[prop]
-	}
-
-	return value
-}
 
 
 const removePrefix = string => {
 	return string.startsWith('.product_')
 	       ? string.slice(13).replace('-', ' ')
 	       : string
+}
+
+
+const formatTag = string => {
+	let value = ''
+
+	if (string.startsWith('.product_')) {
+		value = removePrefix(string)
+	} else if (string === '.upTo50') {
+		value = '$0 - $50'
+	} else if (string === '.between50and100') {
+		value = '$50 - $100'
+	} else if (string === '.between100and250') {
+		value = '$100 - $250'
+	} else if (string === '.between250and500') {
+		value = '$250 - $500'
+	} else if (string === '.greaterThan500') {
+		value = '$500 and up'
+	}
+
+	return value
 }
 
 
@@ -38,7 +48,7 @@ const addTag = (elementId, html) => {
 	}
 
 	tag.href = '#'
-	tag.innerHTML = removePrefix(html)
+	tag.innerHTML = formatTag(html)
 	tag.setAttribute('id', id)
 
 	closeButton.innerText = 'x'
@@ -52,8 +62,7 @@ const addTag = (elementId, html) => {
 		inclusives.splice(elementId.indexOf(elementId), 1)
 		removeTag(tag.id)
 
-		elementId = inclusives.length ? inclusives.join(', ') : '*'
-		elementId = filterFns[elementId] || elementId
+		elementId = inclusives.length ? inclusives.join('') : '*'
 
 		isotope.arrange({ filter: elementId })
 	})
@@ -72,82 +81,82 @@ const removeTag = id => {
 }
 
 
-const filterFns = {
-	upTo50 (arg1, el) {
-		const priceEl = el.querySelector('.amount')
-		const salePriceEl = el.querySelector('.price ins .amount')
-
-		if (!priceEl && !salePriceEl) {
-			return false
-		}
-
-		const price     = parseInt(priceEl.innerText, 10)
-		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-		const amount    = salePrice ? salePrice : price
-
-		return amount > 0 && amount <= 50
-	},
-
-	between50and100 (arg1, el) {
-		const priceEl = el.querySelector('.amount')
-		const salePriceEl = el.querySelector('.price ins .amount')
-
-		if (!priceEl && !salePriceEl) {
-			return false
-		}
-
-		const price = parseInt(priceEl.innerText, 10)
-		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-		const amount    = salePrice ? salePrice : price
-
-		return amount >= 50 && amount <= 100
-	},
-
-	between100and250 (arg1, el) {
-		const priceEl = el.querySelector('.amount')
-		const salePriceEl = el.querySelector('.price ins .amount')
-
-		if (!priceEl && !salePriceEl) {
-			return false
-		}
-
-		const price = parseInt(priceEl.innerText, 10)
-		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-		const amount    = salePrice ? salePrice : price
-
-		return amount >= 100 && amount <= 250
-	},
-
-	between250and500 (arg1, el) {
-		const priceEl = el.querySelector('.amount')
-		const salePriceEl = el.querySelector('.price ins .amount')
-
-		if (!priceEl && !salePriceEl) {
-			return false
-		}
-
-		const price = parseInt(priceEl.innerText, 10)
-		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-		const amount    = salePrice ? salePrice : price
-
-		return amount >= 250 && amount <= 500
-	},
-
-	greaterThan500 (arg1, el) {
-		const priceEl = el.querySelector('.amount')
-		const salePriceEl = el.querySelector('.price ins .amount')
-
-		if (!priceEl && !salePriceEl) {
-			return false
-		}
-
-		const price = parseInt(priceEl.innerText, 10)
-		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-		const amount    = salePrice ? salePrice : price
-
-		return amount >= 500
-	}
-}
+//const filterFns = {
+//	upTo50 (arg1, el) {
+//		const priceEl = el.querySelector('.amount')
+//		const salePriceEl = el.querySelector('.price ins .amount')
+//
+//		if (!priceEl && !salePriceEl) {
+//			return false
+//		}
+//
+//		const price     = parseInt(priceEl.innerText, 10)
+//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+//		const amount    = salePrice ? salePrice : price
+//
+//		return amount > 0 && amount <= 50
+//	},
+//
+//	between50and100 (arg1, el) {
+//		const priceEl = el.querySelector('.amount')
+//		const salePriceEl = el.querySelector('.price ins .amount')
+//
+//		if (!priceEl && !salePriceEl) {
+//			return false
+//		}
+//
+//		const price = parseInt(priceEl.innerText, 10)
+//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+//		const amount    = salePrice ? salePrice : price
+//
+//		return amount >= 50 && amount <= 100
+//	},
+//
+//	between100and250 (arg1, el) {
+//		const priceEl = el.querySelector('.amount')
+//		const salePriceEl = el.querySelector('.price ins .amount')
+//
+//		if (!priceEl && !salePriceEl) {
+//			return false
+//		}
+//
+//		const price = parseInt(priceEl.innerText, 10)
+//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+//		const amount    = salePrice ? salePrice : price
+//
+//		return amount >= 100 && amount <= 250
+//	},
+//
+//	between250and500 (arg1, el) {
+//		const priceEl = el.querySelector('.amount')
+//		const salePriceEl = el.querySelector('.price ins .amount')
+//
+//		if (!priceEl && !salePriceEl) {
+//			return false
+//		}
+//
+//		const price = parseInt(priceEl.innerText, 10)
+//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+//		const amount    = salePrice ? salePrice : price
+//
+//		return amount >= 250 && amount <= 500
+//	},
+//
+//	greaterThan500 (arg1, el) {
+//		const priceEl = el.querySelector('.amount')
+//		const salePriceEl = el.querySelector('.price ins .amount')
+//
+//		if (!priceEl && !salePriceEl) {
+//			return false
+//		}
+//
+//		const price = parseInt(priceEl.innerText, 10)
+//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
+//		const amount    = salePrice ? salePrice : price
+//
+//		return amount >= 500
+//	}
+//}
 
 
 let initSearch = function () {
@@ -179,9 +188,9 @@ function radioButtonGroup (filterLinkGroup) {
 
 		event.preventDefault()
 
-		if (filterLinkGroup.querySelector('.filter-link').classList.contains('is-checked')) {
-			filterLinkGroup.querySelector('.filter-link').classList.remove('is-checked')
-		}
+//		if (filterLinkGroup.querySelector('.filter-link').classList.contains('is-checked')) {
+//			filterLinkGroup.querySelector('.filter-link').classList.remove('is-checked')
+//		}
 
 		event.target.classList.add('is-checked')
 	})
@@ -243,16 +252,10 @@ const updateEachCounts = () => {
 	}
 
 	filterLinks.forEach(link => {
-		let total
 		const count = link.querySelector('.count')
 		const filterValue = link.getAttribute('data-filter')
 		const formattedFilterValue = filterValue.replace('.', '')
-
-		if (typeof filterFns[filterValue] === 'function') {
-			total = items.filter(({ element }) => filterFns[filterValue](arguments, element)).length
-		} else {
-			total = items.filter(({ element }) => element.classList.contains(formattedFilterValue)).length
-		}
+		const total = items.filter(({ element }) => element.classList.contains(formattedFilterValue)).length
 
 		if (total === 0) {
 			link.classList.add('disabled')
@@ -302,9 +305,6 @@ const setup = () => {
 			}
 
 			let filterValue = event.target.getAttribute('data-filter')
-			const filterGroup = group.getAttribute('data-filter-group')
-			filters[filterGroup] = filterValue
-			console.log(filterValue)
 			console.log(inclusives)
 
 			if (!inclusives.includes(filterValue)) {
@@ -317,11 +317,7 @@ const setup = () => {
 
 			console.log(inclusives)
 
-			filterValue = inclusives.length ? inclusives.join(', ') : '*'
-			console.log(filterValue)
-			console.log(concatValues(filters))
-
-			filterValue = filterFns[filterValue] || filterValue
+			filterValue = inclusives.length ? inclusives.join('') : '*'
 
 			console.log(filterValue)
 

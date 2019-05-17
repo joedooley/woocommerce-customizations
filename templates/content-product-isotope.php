@@ -50,10 +50,24 @@ $productButton = sprintf(
 	__( 'Open Product', 'woocommerce' )
 );
 
+$price = (int) $product->get_price();
+$isotopePriceClass = '';
+
+if ( $price <= 50 ) {
+	$isotopePriceClass = 'upTo50';
+} elseif ( $price >= 50 && $price <= 100 ) {
+	$isotopePriceClass = 'between50and100';
+} elseif ( $price >= 100 && $price <= 250 ) {
+	$isotopePriceClass = 'between100and250';
+} elseif ( $price >= 250 && $price <= 500 ) {
+	$isotopePriceClass = 'between250and500';
+} elseif ( $price >= 500 ) {
+	$isotopePriceClass = 'greaterThan500';
+}
+
 ?>
-<li <?php wc_product_class(); ?> data-category="<?php echo $productCatTermSlug ?>"
-                                 data-tag="<?php echo $productTagTermSlug ?>"
-                                 xmlns="http://www.w3.org/1999/html">
+
+<li <?php wc_product_class( $isotopePriceClass ); ?> xmlns="http://www.w3.org/1999/html">
 	<div class="inner">
 		<?php
 		/**
