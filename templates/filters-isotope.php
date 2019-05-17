@@ -54,10 +54,11 @@ $currentTerm = $current->name;
 				<h6>Subcategories</h6>
 				<?php foreach ( $childTerms as $childTerm ): ?>
 					<?php
+						$id = sprintf( 'product_cat-%s', $childTerm->slug );
 						$slug = sprintf( '.product_cat-%s', $childTerm->slug );
 						$liveSearch->setProductCatTermSlug( $slug );
 					?>
-					<a href="#" class="filter-link" data-filter="<?php echo $liveSearch->getProductCatTermSlug(); ?>"><?php echo $childTerm->name; ?> <span class="count"><?php echo $childTerm->count ?></span></a>
+						<a href="#" class="filter-link" id="<?php echo $id ?>" data-filter="<?php echo $liveSearch->getProductCatTermSlug(); ?>"><?php echo $childTerm->name; ?> <span class="count"><?php echo $childTerm->count ?></span></a>
 				<?php endforeach; ?>
 			</div>
 		</div>
@@ -70,10 +71,11 @@ $currentTerm = $current->name;
 				<?php foreach ( $tags as $tag ): ?>
 					<?php if ( $tag->count !== 0 ): ?>
 						<?php
-						$productTagTermSlug = sprintf( '.product_tag-%s', $tag->slug );
-						$liveSearch->setProductTagTermSlug( $productTagTermSlug );
+							$id = sprintf( 'product_tag-%s', $tag->slug );
+							$productTagTermSlug = sprintf( '.product_tag-%s', $tag->slug );
+							$liveSearch->setProductTagTermSlug( $productTagTermSlug );
 						?>
-						<a href="#" class="filter-link" data-filter="<?php echo $liveSearch->getProductTagTermSlug(); ?>"><?php echo $tag->name; ?>	<span class="count"><?php echo $tag->count ?></span></a>
+							<a href="#" class="filter-link" id="<?php echo $id ?>" data-filter="<?php echo $liveSearch->getProductTagTermSlug(); ?>"><?php echo $tag->name; ?>	<span class="count"><?php echo $tag->count ?></span></a>
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</div>
@@ -83,11 +85,11 @@ $currentTerm = $current->name;
 	<div class="ui-group button-group">
 		<div class="filter-link-group product-tag-terms" data-filter-group="price">
 			<h6>Price</h6>
-			<a href="#" class="filter-link" data-filter=".upTo50"><?php echo __( '$0 - $50', 'woocommerce' ) ?> <span class="count"></span></a>
-			<a href="#" class="filter-link" data-filter=".between50and100"><?php echo __( '$50 - $100', 'woocommerce' ) ?> <span class="count"></span></a>
-			<a href="#" class="filter-link" data-filter=".between100and250"><?php echo __( '$100 - $250', 'woocommerce' ) ?> <span class="count"></span></a>
-			<a href="#" class="filter-link" data-filter=".between250and500"><?php echo __( '$250 - $500', 'woocommerce' ) ?> <span class="count"></span></a>
-			<a href="#" class="filter-link" data-filter=".greaterThan500"><?php echo __( '$500 and up', 'woocommerce' ) ?> <span class="count"></span></a>
+			<a href="#" class="filter-link" id="upTo50" data-filter=".upTo50"><?php echo __( '$0 - $50', 'woocommerce' ) ?> <span class="count"></span></a>
+			<a href="#" class="filter-link" id="between50and100" data-filter=".between50and100"><?php echo __( '$50 - $100', 'woocommerce' ) ?> <span class="count"></span></a>
+			<a href="#" class="filter-link" id="between100and250" data-filter=".between100and250"><?php echo __( '$100 - $250', 'woocommerce' ) ?> <span class="count"></span></a>
+			<a href="#" class="filter-link" id="between250and500" data-filter=".between250and500"><?php echo __( '$250 - $500', 'woocommerce' ) ?> <span class="count"></span></a>
+			<a href="#" class="filter-link" id="greaterThan500" data-filter=".greaterThan500"><?php echo __( '$500 and up', 'woocommerce' ) ?> <span class="count"></span></a>
 		</div>
 	</div>
 </div>

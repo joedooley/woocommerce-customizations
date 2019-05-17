@@ -74,89 +74,13 @@ const addTag = (elementId, html) => {
 const removeTag = id => {
 	id = id.replace('.', '')
 	const el = document.querySelector(`.wc-isotope-active-filters #${ id }`)
+	const matchingFilterEl = document.querySelector(`.filter-link-group #${ id }`)
 
 	if (el) {
 		el.parentNode.removeChild(el)
+		matchingFilterEl.classList.remove('is-checked')
 	}
 }
-
-
-//const filterFns = {
-//	upTo50 (arg1, el) {
-//		const priceEl = el.querySelector('.amount')
-//		const salePriceEl = el.querySelector('.price ins .amount')
-//
-//		if (!priceEl && !salePriceEl) {
-//			return false
-//		}
-//
-//		const price     = parseInt(priceEl.innerText, 10)
-//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-//		const amount    = salePrice ? salePrice : price
-//
-//		return amount > 0 && amount <= 50
-//	},
-//
-//	between50and100 (arg1, el) {
-//		const priceEl = el.querySelector('.amount')
-//		const salePriceEl = el.querySelector('.price ins .amount')
-//
-//		if (!priceEl && !salePriceEl) {
-//			return false
-//		}
-//
-//		const price = parseInt(priceEl.innerText, 10)
-//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-//		const amount    = salePrice ? salePrice : price
-//
-//		return amount >= 50 && amount <= 100
-//	},
-//
-//	between100and250 (arg1, el) {
-//		const priceEl = el.querySelector('.amount')
-//		const salePriceEl = el.querySelector('.price ins .amount')
-//
-//		if (!priceEl && !salePriceEl) {
-//			return false
-//		}
-//
-//		const price = parseInt(priceEl.innerText, 10)
-//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-//		const amount    = salePrice ? salePrice : price
-//
-//		return amount >= 100 && amount <= 250
-//	},
-//
-//	between250and500 (arg1, el) {
-//		const priceEl = el.querySelector('.amount')
-//		const salePriceEl = el.querySelector('.price ins .amount')
-//
-//		if (!priceEl && !salePriceEl) {
-//			return false
-//		}
-//
-//		const price = parseInt(priceEl.innerText, 10)
-//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-//		const amount    = salePrice ? salePrice : price
-//
-//		return amount >= 250 && amount <= 500
-//	},
-//
-//	greaterThan500 (arg1, el) {
-//		const priceEl = el.querySelector('.amount')
-//		const salePriceEl = el.querySelector('.price ins .amount')
-//
-//		if (!priceEl && !salePriceEl) {
-//			return false
-//		}
-//
-//		const price = parseInt(priceEl.innerText, 10)
-//		const salePrice = salePriceEl ? parseInt(salePriceEl.innerText, 10) : false
-//		const amount    = salePrice ? salePrice : price
-//
-//		return amount >= 500
-//	}
-//}
 
 
 let initSearch = function () {
@@ -182,17 +106,19 @@ let initSearch = function () {
 
 function radioButtonGroup (filterLinkGroup) {
 	filterLinkGroup.addEventListener('click', function (event) {
-		if (!matchesSelector(event.target, 'a')) {
+		const filterLink = event.target
+
+		if (!matchesSelector(filterLink, 'a')) {
 			return
 		}
 
+		if (filterLink.classList.contains('is-checked')) {
+			filterLink.classList.remove('is-checked')
+		} else {
+			filterLink.classList.add('is-checked')
+		}
+
 		event.preventDefault()
-
-//		if (filterLinkGroup.querySelector('.filter-link').classList.contains('is-checked')) {
-//			filterLinkGroup.querySelector('.filter-link').classList.remove('is-checked')
-//		}
-
-		event.target.classList.add('is-checked')
 	})
 }
 
