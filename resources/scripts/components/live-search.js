@@ -6,7 +6,7 @@ import debounce from 'lodash-es/debounce'
 let qsRegex
 let isotope
 let items = false
-const inclusives = []
+let inclusives = []
 
 
 const removePrefix = string => {
@@ -59,7 +59,7 @@ const addTag = (elementId, html) => {
 	tag.addEventListener('click', function (event) {
 		event.preventDefault()
 
-		inclusives.splice(elementId.indexOf(elementId), 1)
+		inclusives = inclusives.filter(value => value !== elementId)
 		removeTag(tag.id)
 
 		elementId = inclusives.length ? inclusives.join('') : '*'
@@ -73,8 +73,8 @@ const addTag = (elementId, html) => {
 
 const removeTag = id => {
 	id = id.replace('.', '')
-	const el = document.querySelector(`.wc-isotope-active-filters #${ id }`)
-	const matchingFilterEl = document.querySelector(`.filter-link-group #${ id }`)
+	const el = document.querySelector(`.wc-isotope-active-filters #${id}`)
+	const matchingFilterEl = document.querySelector(`.filter-link-group #${id}`)
 
 	if (el) {
 		el.parentNode.removeChild(el)
@@ -104,34 +104,23 @@ let initSearch = function () {
 }
 
 
-function radioButtonGroup (filterLinkGroup) {
-	filterLinkGroup.addEventListener('click', function (event) {
-		const filterLink = event.target
-
-		if (!matchesSelector(filterLink, 'a')) {
-			return
-		}
-
-		if (filterLink.classList.contains('is-checked')) {
-			filterLink.classList.remove('is-checked')
-		} else {
-			filterLink.classList.add('is-checked')
-		}
-
-		event.preventDefault()
-	})
-}
-
-
 const toggleIsCheckedClass = () => {
-	const filterLinkGroups = document.querySelectorAll('.filter-link-group')
+	const filterLinks = document.querySelectorAll('.filter-link')
 
-	if (!filterLinkGroups || !filterLinkGroups.length) {
+	if (!filterLinks || !filterLinks.length) {
 		return
 	}
 
-	filterLinkGroups.forEach(group => {
-		radioButtonGroup(group)
+	filterLinks.forEach(link => {
+		link.addEventListener('click', function (event) {
+			event.preventDefault()
+
+			if (link.classList.contains('is-checked')) {
+				link.classList.remove('is-checked')
+			} else {
+				link.classList.add('is-checked')
+			}
+		})
 	})
 }
 
@@ -221,7 +210,13 @@ const setup = () => {
 		return
 	}
 
-	isotope = new Isotope(el, { itemSelector: '.product' })
+	isotope = new Isotope(el, {
+		itemSelector: '.product',
+		percentPosition: true,
+		masonry:         {
+			columnWidth: '.product'
+		}
+	})
 	items = isotope.filteredItems
 
 	filterLinkGroups.forEach(group => {
@@ -231,21 +226,16 @@ const setup = () => {
 			}
 
 			let filterValue = event.target.getAttribute('data-filter')
-			console.log(inclusives)
 
 			if (!inclusives.includes(filterValue)) {
 				inclusives.push(filterValue)
 				addTag(filterValue, filterValue)
 			} else {
-				inclusives.splice(filterValue.indexOf(filterValue), 1)
+				inclusives = inclusives.filter(value => value !== filterValue)
 				removeTag(filterValue)
 			}
 
-			console.log(inclusives)
-
 			filterValue = inclusives.length ? inclusives.join('') : '*'
-
-			console.log(filterValue)
 
 			isotope.arrange({ filter: filterValue })
 		})
