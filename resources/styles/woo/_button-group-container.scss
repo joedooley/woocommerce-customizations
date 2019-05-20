@@ -7,8 +7,16 @@ body.woocommerce {
 	div.button-group-container {
 		display: flex;
 		height: 38px;
-		justify-content: space-between;
-		margin-top: auto;
+		justify-content: flex-start;
+		margin-top: 20px;
+
+		a {
+			margin-right: 20px;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
 
 		a.added_to_cart {
 			padding-top: 0;
