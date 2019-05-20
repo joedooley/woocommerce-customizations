@@ -19,20 +19,3 @@ add_shortcode( 'wc_product_cat_flickity_slider', function ( $atts ): string {
 
 	return $slider->render();
 } );
-
-
-/**
- * Create `wc_product_cat_flickity_slider` shortcode.
- *
- * Example usage: `[wc_live_search]`.
- *
- * @since 1.0.0
- */
-add_shortcode( 'wc_live_search', function (): string {
-	$liveSearch = new LiveSearch();
-	$liveSearch->addHooks();
-
-	return $liveSearch->render();
-} );
-
-
