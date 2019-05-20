@@ -127,9 +127,17 @@ const runFilter = () => {
 			}
 
 			if (filterValues) {
-				if (!el.classList.contains(filterValues)) {
-					return false
-				}
+				let isMatch = true
+
+				inclusives.forEach(value => {
+					const cssClass = value.replace('.', '')
+
+					if (!el.classList.contains(cssClass)) {
+						isMatch = false
+					}
+				})
+
+				return isMatch
 			}
 
 			return true
