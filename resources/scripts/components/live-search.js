@@ -84,9 +84,10 @@ const removeTag = id => {
 
 
 let initSearch = function () {
+	const clearButton = document.querySelector('.wc-isotope-search .clear')
 	const quicksearch = document.querySelector('#wc-isotope-search')
 
-	if (!quicksearch) {
+	if (!quicksearch || !clearButton) {
 		return
 	}
 
@@ -95,6 +96,13 @@ let initSearch = function () {
 
 		runFilter()
 	}, 200))
+
+	clearButton.addEventListener('click', () => {
+		quicksearch.value = ''
+		filters['search'] = ''
+
+		runFilter()
+	})
 }
 
 

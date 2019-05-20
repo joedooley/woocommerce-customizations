@@ -25,5 +25,6 @@ defined( 'ABSPATH' ) || exit;
 	</a>
 	<label for="wc-isotope-search">
 		<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Live Search ..." type="search" />
+		<span class="clear" title="Click to clear input"></span>
 	</label>
 </div>

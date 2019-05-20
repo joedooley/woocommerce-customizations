@@ -45,7 +45,33 @@ body.woocommerce {
 	}
 
 	label {
+		position: relative;
 		width: 100%;
+
+		.clear {
+			bottom: 8px;
+			cursor: pointer;
+			margin-top: 12px;
+			opacity: 0;
+			padding: 12px;
+			position: absolute;
+			left: calc(100% - 30px);
+			right: 10px;
+			transition: opacity 0.25s ease-in-out;
+			-webkit-appearance: searchfield-cancel-button;
+
+			@media (min-width: 768px) {
+				left: auto;
+				margin-top: 0;
+				position: absolute;
+				right: 10px;
+				top: 8px;
+			}
+
+			&:hover {
+				opacity: 1;
+			}
+		}
 	}
 
 	input[type="search"] {
@@ -58,6 +84,19 @@ body.woocommerce {
 		border: 1px solid #ddd;
 		border-radius: 3px;
 		-webkit-appearance: none;
+
+		&:focus,
+		&:hover {
+			~ .clear {
+				opacity: 1;
+			}
+		}
+
+		&:not(:valid) {
+			~ .clear {
+				opacity: 0;
+			}
+		}
 	}
 
 	.toggle-filters {
