@@ -3,9 +3,9 @@ import debounce from 'lodash-es/debounce'
 
 
 
-let qsRegex
 let isotope
 let items = false
+let filters = []
 let inclusives = []
 
 
@@ -62,9 +62,9 @@ const addTag = (elementId, html) => {
 		inclusives = inclusives.filter(value => value !== elementId)
 		removeTag(tag.id)
 
-		elementId = inclusives.length ? inclusives.join('') : '*'
+		filters['links'] = inclusives.length ? inclusives.join('') : ''
 
-		isotope.arrange({ filter: elementId })
+		runFilter()
 	})
 
 	container.appendChild(tag)
@@ -91,16 +91,42 @@ let initSearch = function () {
 	}
 
 	quicksearch.addEventListener('keyup', debounce(() => {
-		qsRegex = new RegExp(quicksearch.value, 'gi')
+		filters['search'] = quicksearch.value
 
-		isotope.arrange({
-			filter: function (arg1, el) {
-				const title = el.querySelector('.woocommerce-loop-product__title')
-
-				return qsRegex ? title.innerText.match(qsRegex) : true
-			}
-		})
+		runFilter()
 	}, 200))
+}
+
+
+const runFilter = () => {
+	isotope.arrange({
+		filter: function (el) {
+			const rawFilterValue = filters['links']
+			const filterValues = rawFilterValue ? rawFilterValue.replace('.', '') : false
+			const searchValue = filters['search'] && filters['search'] !== '' ? filters['search'] : false
+
+			if (searchValue) {
+				const titleEl = el.querySelector('.woocommerce-loop-product__title')
+				const title = titleEl ? titleEl.innerText.toLowerCase() : false
+
+				if (!title) {
+					return false
+				}
+
+				if (!title.includes(searchValue)) {
+					return false
+				}
+			}
+
+			if (filterValues) {
+				if (!el.classList.contains(filterValues)) {
+					return false
+				}
+			}
+
+			return true
+		}
+	})
 }
 
 
@@ -213,11 +239,13 @@ const setup = () => {
 	isotope = new Isotope(el, {
 		itemSelector: '.product',
 		percentPosition: true,
-		masonry:         {
-			columnWidth: '.product'
-		}
+		masonry: { columnWidth: '.product' },
+		isJQueryFiltering: false
 	})
-	items = isotope.filteredItems
+
+	if (!items) {
+		items = isotope.filteredItems
+	}
 
 	filterLinkGroups.forEach(group => {
 		group.addEventListener('click', function (event) {
@@ -235,9 +263,10 @@ const setup = () => {
 				removeTag(filterValue)
 			}
 
-			filterValue = inclusives.length ? inclusives.join('') : '*'
+			filterValue = inclusives.length ? inclusives.join('') : ''
+			filters['links'] = filterValue
 
-			isotope.arrange({ filter: filterValue })
+			runFilter()
 		})
 	})
 
