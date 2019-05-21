@@ -39,6 +39,15 @@ class Enqueue {
 			[ 'woocommerce-customizations/flickity.css' ],
 			WOO_CUSTOMIZATIONS_VERSION
 		);
+
+		if ( is_shop() || is_product_taxonomy() || is_product() ) {
+			wp_enqueue_style(
+				'woocommerce-customizations/overrides.css',
+				WOO_CUSTOMIZATIONS_URL . 'dist/styles/overrides.css',
+				[ 'woocommerce-customizations/main.css' ],
+				WOO_CUSTOMIZATIONS_VERSION
+			);
+		}
 	}
 
 
