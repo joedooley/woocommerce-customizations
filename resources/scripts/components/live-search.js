@@ -189,13 +189,9 @@ const toggleIsHiddenClassForFilters = () => {
 		if (this.__toggle) {
 			target.classList.remove('is-hidden')
 			this.classList.add('active')
-			icon.classList.remove('fa-caret-down')
-			icon.classList.add('fa-caret-up')
 		} else {
 			target.classList.add('is-hidden')
 			this.classList.remove('active')
-			icon.classList.remove('fa-caret-up')
-			icon.classList.add('fa-caret-down')
 		}
 	})
 }
