@@ -11,7 +11,7 @@ let inclusives = []
 
 const removePrefix = string => {
 	return string.startsWith('.product_')
-	       ? string.slice(13).replace('-', ' ')
+	       ? string.slice(13).replace(/-/g, ' ')
 	       : string
 }
 
