@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 $liveSearch = new LiveSearch();
 $terms = $liveSearch->getProductCatTerms();
 $parentTerms = $liveSearch->getProductCatParentTerms();
-$childTerms = $liveSearch->getProductCatChildTerms();
+$childTerms = ! is_shop() ? $liveSearch->getProductCatChildTerms() : false;
 $tags = $liveSearch->getProductTagTerms();
 $current = get_queried_object();
 $currentTerm = $current->name;
@@ -48,7 +48,7 @@ $currentTerm = $current->name;
 		</div>
 	<?php endif; ?>
 
-	<?php if ( count( $childTerms ) > 0 ): ?>
+	<?php if ( $childTerms && count( $childTerms ) > 0 ): ?>
 		<div class="ui-group button-group">
 			<div class="filter-link-group product-cat-terms" data-filter-group="cat">
 				<h6>Subcategories</h6>
