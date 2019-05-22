@@ -83,7 +83,7 @@ const removeTag = id => {
 }
 
 
-let initSearch = function () {
+const initSearch = () => {
 	const clearButton = document.querySelector('.wc-isotope-search .clear')
 	const quicksearch = document.querySelector('#wc-isotope-search')
 
@@ -175,7 +175,6 @@ const toggleIsHiddenClassForFilters = () => {
 	}
 
 	toggle.addEventListener('click', function (event) {
-		const icon = toggle.querySelector('#arrow-icon')
 		const target = document.querySelector('.wc-isotope-filters')
 
 		event.preventDefault()
