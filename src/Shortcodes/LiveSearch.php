@@ -11,13 +11,6 @@ use DevDesigns\WoocommerceCustomizations\src\Shortcodes\HookInterface;
 class LiveSearch implements HookInterface {
 
 	/**
-	 * Shortcode attributes.
-	 *
-	 * @var array
-	 */
-	protected $atts;
-
-	/**
 	 * Product query reference.
 	 *
 	 * @var WP_Query
@@ -80,24 +73,13 @@ class LiveSearch implements HookInterface {
 	 */
 	protected $productTagTermSlug;
 
-	/**
-	 * Name of product_cat taxonomy.
-	 *
-	 * @var string
-	 */
-	private const PRODUCT_CAT_TAX_NAME = 'Categories';
-
 
 	/**
 	 * LiveSearch constructor.
 	 *
-	 * @param array $atts
-	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( array $atts = [] ) {
-		$this->atts = $atts;
-
+	public function __construct() {
 		$this->init();
 	}
 
@@ -121,77 +103,6 @@ class LiveSearch implements HookInterface {
 		self::enqueueAssets();
 
 		$this->getProducts();
-	}
-
-
-	/**
-	 * Render slider.
-	 *
-	 * @return string
-	 */
-	public function render(): string {
-		$products = $this->query->posts;
-		$terms = $this->getProductCatTerms();
-
-		// d( $terms );
-
-		if ( ! $products ) {
-			return false;
-		}
-
-		if ( $this->query->have_posts() ) :
-			ob_start(); ?>
-
-			<div class="wc-live-search">
-				<div class="wc-isotope-search">
-					<label for="wc-isotope-search">
-						<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Search" type="search" />
-					</label>
-				</div>
-				<div class="wc-isotope-filters">
-					<?php if ( $terms ): ?>
-						<div class="ui-group button-group product-cat-terms">
-							<h3><?php echo self::PRODUCT_CAT_TAX_NAME; ?></h3>
-							<div class="button-group js-radio-button-group" data-filter-group="product_cat">
-								<button class="button is-checked" data-filter="*">All Products</button>
-								<?php foreach ( $terms as $term ): ?>
-									<?php if ( $term->count !== 0 ): ?>
-										<?php $this->termSlug = sprintf( '.product_cat-%s', $term->slug ); ?>
-										<button class="button" data-filter="<?php echo $this->termSlug; ?>"><?php echo $term->name; ?></button>
-									<?php endif; ?>
-								<?php endforeach; ?>
-							</div>
-						</div>
-					<?php endif; ?>
-				</div>
-
-				<div class="wc-isotope-product-grid woocommerce">
-					<?php woocommerce_product_loop_start() ?>
-						<?php while ( $this->query->have_posts() ) : $this->query->the_post(); ?>
-							<?php
-								$this->product = wc_get_product( $this->query->post );
-								wc_get_template( 'content-product-isotope.php', [ 'termSlug' => $this->termSlug ] );
-							?>
-						<?php endwhile; ?>
-					<?php woocommerce_product_loop_end() ?>
-				</div>
-			</div>
-		<?php endif;
-
-		$slider = ob_get_clean();
-		wp_reset_query();
-
-		return $slider;
-	}
-
-
-	public static function renderSearch (): void { ?>
-		<div class="wc-isotope-search">
-			<label for="wc-isotope-search">
-				<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Search" type="search"/>
-			</label>
-		</div>
-	<?php
 	}
 
 
@@ -307,16 +218,6 @@ class LiveSearch implements HookInterface {
 
 
 	/**
-	 * Get cached/fresh attributes.
-	 *
-	 * @since 1.0.0
-	 */
-	private function getAttributesTerms (): array {
-		return wc_get_attribute_taxonomies();
-	}
-
-
-	/**
 	 * Enqueue assets only on pages where shortcode is being used.
 	 *
 	 * @since 1.0.0
@@ -327,15 +228,5 @@ class LiveSearch implements HookInterface {
 
 		wp_enqueue_script( 'woocommerce-customizations/isotope.js' );
 		wp_enqueue_script( 'woocommerce-customizations/main.js' );
-	}
-
-
-	/**
-	 * Create unique id for flickity element.
-	 *
-	 * @since 1.0.0
-	 */
-	private function uniqueId( string $prefix ): string {
-		return uniqid( sprintf( '%s-', $prefix ), false );
 	}
 }
