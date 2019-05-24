@@ -3,11 +3,11 @@ $pink: #BD10E0;
 $red: #D0021B;
 $blue: #4A90E2;
 
-body.woocommerce {
+.woocommerce {
 	div.button-group-container {
 		display: flex;
 		height: 38px;
-		justify-content: space-around;
+		justify-content: flex-start;
 		margin-top: 20px;
 
 		a {
