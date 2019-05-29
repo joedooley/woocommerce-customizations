@@ -94,8 +94,6 @@ const initSearch = () => {
 	quicksearch.addEventListener('keyup', debounce(() => {
 		filters['search'] = quicksearch.value.toLowerCase()
 
-		console.log(filters)
-
 		runFilter()
 	}, 200))
 
