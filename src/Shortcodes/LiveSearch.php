@@ -18,13 +18,6 @@ class LiveSearch implements HookInterface {
 	protected $query;
 
 	/**
-	 * Reference to current product in the loop
-	 *
-	 * @var object
-	 */
-	protected $product;
-
-	/**
 	 * Reference to product_cat terms
 	 *
 	 * @var array
@@ -101,16 +94,6 @@ class LiveSearch implements HookInterface {
 	 */
 	private function init(): void {
 		self::enqueueAssets();
-
-		$this->getProducts();
-	}
-
-
-	private function getProducts(): void {
-		$this->query = new WP_Query( [
-			'post_type'      => 'product',
-			'posts_per_page' => - 1,
-		] );
 	}
 
 
