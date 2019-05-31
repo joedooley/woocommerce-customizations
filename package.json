@@ -14,9 +14,6 @@
 		"postinstall": "composer install"
 	},
 	"devDependencies": {
-		"browser-sync": "^2.26.3",
-		"browser-sync-webpack-plugin": "^2.0.1",
-		"bs-html-injector": "^3.0.3",
 		"laravel-mix": "^4.0.15",
 		"resolve-url-loader": "^2.3.1",
 		"sass": "^1.17.3",
@@ -26,6 +23,7 @@
 	"dependencies": {
 		"flickity": "^2.2.0",
 		"isotope-layout": "^3.0.6",
-		"lodash-es": "^4.17.11"
+		"lodash-es": "^4.17.11",
+		"matchheight": "^0.1.2"
 	}
 }
