@@ -28,3 +28,15 @@ defined( 'ABSPATH' ) || exit;
 		<span class="clear" title="Click to clear input"></span>
 	</label>
 </div>
+
+<div class="wc-isotope-sort-container">
+	<label for="wc-isotope-sort">
+		<select name="wc-isotope-sort-select" id="wc-isotope-sort">
+			<option value="" data-sort-by="original-order"><?php echo __( 'Default sorting', 'woocommerce' ); ?></option>
+			<option value="name" data-sort-by="name"><?php echo __( 'Sort by name: A to Z', 'woocommerce' ); ?></option>
+			<option value="nameDesc" data-sort-by="nameDesc"><?php echo __( 'Sort by name: Z to A', 'woocommerce' ); ?></option>
+			<option value="price" data-sort-by="price"><?php echo __( 'Sort by price: low to high', 'woocommerce' ); ?></option>
+			<option value="priceDesc" data-sort-by="priceDesc"><?php echo __( 'Sort by price: high to low', 'woocommerce' ); ?></option>
+		</select>
+	</label>
+</div>

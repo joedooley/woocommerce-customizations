@@ -146,6 +146,23 @@ const runFilter = () => {
 }
 
 
+const initSort = () => {
+	const select = document.querySelector('#wc-isotope-sort')
+
+	if (!select) {
+		return
+	}
+
+	select.addEventListener('change', event => {
+		const sortValue = event.target.value
+		console.log(event)
+		console.log(sortValue)
+
+		isotope.arrange({ sortBy: sortValue })
+	})
+}
+
+
 const toggleIsCheckedClass = () => {
 	const filterLinks = document.querySelectorAll('.filter-link')
 
@@ -251,7 +268,48 @@ const setup = () => {
 		itemSelector: '.product',
 		percentPosition: true,
 		masonry: { columnWidth: '.product' },
-		isJQueryFiltering: false
+		isJQueryFiltering: false,
+		layoutMode: 'fitRows',
+		horizontalOrder: true,
+		stagger: 30,
+		getSortData: {
+			name:     '.woocommerce-loop-product__title',
+			nameDesc: '.woocommerce-loop-product__title',
+			price (el) {
+				const priceEl     = el.querySelector('.woocommerce-Price-amount')
+				const salePriceEl = el.querySelector('ins .woocommerce-Price-amount')
+
+				 if (!priceEl && !salePriceEl) {
+				    return 0
+				 }
+
+				const price     = parseInt(priceEl.innerText.replace(',', '.'), 10)
+				const salePrice = salePriceEl ? parseInt(salePriceEl.innerText.replace(',', '.'), 10) : false
+				const amount = salePrice ? salePrice : price
+
+				return amount
+			},
+			priceDesc (el) {
+				const priceEl = el.querySelector('.woocommerce-Price-amount')
+				const salePriceEl = el.querySelector('ins .woocommerce-Price-amount')
+
+				if (!priceEl && !salePriceEl) {
+					return 0
+				}
+
+				const price     = parseInt(priceEl.innerText.replace(',', '.'), 10)
+				const salePrice = salePriceEl ? parseInt(salePriceEl.innerText.replace(',', '.'), 10) : false
+				const amount = salePrice ? salePrice : price
+
+				return amount
+			},
+		},
+		sortAscending: {
+			name:      true,
+			nameDesc:  false,
+			price:     true,
+			priceDesc: false,
+		},
 	})
 
 	if (!items) {
@@ -289,6 +347,7 @@ const setup = () => {
 export const initIsotope = () => {
 	setup()
 	initSearch()
+	initSort()
 	toggleIsCheckedClass()
 	toggleIsHiddenClassForFilters()
 	updateEachCounts()
