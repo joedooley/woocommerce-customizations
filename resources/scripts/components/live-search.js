@@ -1,4 +1,6 @@
 import Isotope  from 'isotope-layout'
+import MatchHeight from 'matchheight'
+import max from 'lodash-es/max'
 import debounce from 'lodash-es/debounce'
 
 
@@ -106,6 +108,23 @@ const initSearch = () => {
 }
 
 
+const initSort = () => {
+	const select = document.querySelector('#wc-isotope-sort')
+
+	if (!select) {
+		return
+	}
+
+	select.addEventListener('change', event => {
+		const sortValue = event.target.value
+
+		isotope.arrange({ sortBy: sortValue })
+	})
+
+	MatchHeight.update()
+}
+
+
 const runFilter = () => {
 	isotope.arrange({
 		filter: function (el) {
@@ -143,23 +162,29 @@ const runFilter = () => {
 			return true
 		}
 	})
+
+	MatchHeight.update()
 }
 
 
-const initSort = () => {
-	const select = document.querySelector('#wc-isotope-sort')
+const updateProductTitleHeights = () => {
+	const heights = []
+	const productTitleEls = document.querySelectorAll('.woocommerce-loop-product__title')
 
-	if (!select) {
+	if (!productTitleEls || !productTitleEls.length) {
 		return
 	}
 
-	select.addEventListener('change', event => {
-		const sortValue = event.target.value
-		console.log(event)
-		console.log(sortValue)
+	productTitleEls.forEach(function (el) {
+		const currentHeight = el.clientHeight
 
-		isotope.arrange({ sortBy: sortValue })
+		if (!heights.includes(currentHeight)) {
+			heights.push(currentHeight)
+		}
 	})
+
+	const maxHeight = max(heights)
+	document.documentElement.style.setProperty('--product-title-min-height', `${maxHeight}px`)
 }
 
 
@@ -345,6 +370,8 @@ const setup = () => {
 
 
 export const initIsotope = () => {
+	updateProductTitleHeights()
+	MatchHeight.init()
 	setup()
 	initSearch()
 	initSort()
