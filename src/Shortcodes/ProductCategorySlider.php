@@ -114,15 +114,8 @@ class ProductCategorySlider implements HookInterface {
 				<div id="<?php echo $id ?>" class="products flickity-slider">
 					<?php while ( $this->query->have_posts() ) : $this->query->the_post(); ?>
 						<?php
-
 							$this->product = wc_get_product( $this->query->post );
-
-							$args = [
-								'addToCartButton' => $this->getAddToCartButton() ?? '',
-								'permalink'       => $this->product->get_permalink() ?? ''
-							];
-
-							wc_get_template( 'content-product-slider.php', $args );
+							wc_get_template( 'content-product-slider.php', [ 'permalink' => $this->product->get_permalink() ?? '' ] );
 						?>
 					<?php endwhile; ?>
 				</div>
@@ -150,25 +143,6 @@ class ProductCategorySlider implements HookInterface {
 				],
 			],
 		] );
-	}
-
-
-	public function getAddToCartButton(): string {
-		$isAjax = $this->product->supports( 'ajax_add_to_cart' ) && $this->isPurchasable() ? 'ajax_add_to_cart' : '';
-		$disabled = $this->isPurchasable() ? '' : 'disabled';
-		$classes = "square-button add-to-cart add_to_cart_button {$disabled} {$isAjax}";
-		$addToCartUrl = $disabled ? '#' : $this->product->add_to_cart_url();
-
-		return sprintf(
-			'<a href="%s" data-quantity="%s" data-product_id="%s" data-product_sku="%s" aria-label="%s" rel="nofollow" class="%s">%s</a>',
-			esc_url( $addToCartUrl ),
-			esc_attr( 1 ),
-			$this->product->get_id(),
-			$this->product->get_sku(),
-			$this->product->add_to_cart_description(),
-			esc_attr( $classes ),
-			esc_html( __( 'Add to Cart', 'woocommerce' ) )
-		);
 	}
 
 

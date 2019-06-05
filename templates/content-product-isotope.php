@@ -99,22 +99,30 @@ if ( $price <= 50 ) {
 			 * @hooked woocommerce_template_loop_price - 10
 			 */
 			do_action( 'woocommerce_after_shop_loop_item_title' );
-
-			/**
-			 * Hook: woocommerce_after_shop_loop_item.
-			 *
-			 * @hooked woocommerce_template_loop_product_link_close - 5
-			 * @hooked woocommerce_template_loop_add_to_cart - 10
-			 */
-			// do_action( 'woocommerce_after_shop_loop_item' );
 		?>
+
 		</a>
+
+		<?php
+			/**
+			 * Hook: woocommerce_before_button_group_container.
+			 */
+			do_action( 'woocommerce_before_button_group_container' );
+		?>
 
 		<div class="button-group-container">
 			<?php echo $previewButton; ?>
-			<?php echo woocommerce_template_loop_add_to_cart(); ?>
-			<?php echo $productButton; ?>
+			<?php woocommerce_template_loop_add_to_cart(); ?>
+			<?php if ( $product->get_type() === 'simple' ): ?>
+				<?php echo $productButton; ?>
+			<?php endif; ?>
 		</div>
 
+		<?php
+			/**
+			 * Hook: woocommerce_after_button_group_container.
+			 */
+			do_action( 'woocommerce_after_button_group_container' );
+		?>
 	</div>
 </li>

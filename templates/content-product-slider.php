@@ -74,18 +74,32 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 			__( 'Preview Product', 'woocommerce' )
 		);
 
-		$addToCartButton = $args['addToCartButton'];
-
 		$productButton = sprintf(
 			'<a href="%s" class="square-button open-product">%s</a>',
 			$args['permalink'],
 			__( 'Open Product', 'woocommerce' )
 		); ?>
 
+		<?php
+			/**
+			 * Hook: woocommerce_before_button_group_container.
+			 */
+			do_action( 'woocommerce_before_button_group_container' );
+		?>
+
 		<div class="button-group-container">
 			<?php echo $previewButton; ?>
-			<?php echo $addToCartButton; ?>
-			<?php echo $productButton; ?>
+			<?php woocommerce_template_loop_add_to_cart(); ?>
+			<?php if ( $product->get_type() === 'simple' ): ?>
+				<?php echo $productButton; ?>
+			<?php endif; ?>
 		</div>
+
+		<?php
+			/**
+			 * Hook: woocommerce_after_button_group_container.
+			 */
+			do_action( 'woocommerce_after_button_group_container' );
+		?>
 	</div>
 </article>
