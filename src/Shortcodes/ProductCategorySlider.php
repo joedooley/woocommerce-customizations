@@ -10,6 +10,7 @@
 namespace DevDesigns\WoocommerceCustomizations\src\Shortcodes;
 
 use WP_Query;
+use DevDesigns\WoocommerceCustomizations\src\HookInterface;
 
 
 

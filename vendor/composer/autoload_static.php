@@ -125,7 +125,8 @@ class ComposerStaticInit6879f95766ab94c07d6b7494b6e99b21
         'Composer\\Installers\\ZendInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/ZendInstaller.php',
         'Composer\\Installers\\ZikulaInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/ZikulaInstaller.php',
         'DevDesigns\\WoocommerceCustomizations\\Assets\\Enqueue' => __DIR__ . '/../..' . '/src/Assets/Enqueue.php',
-        'DevDesigns\\WoocommerceCustomizations\\src\\Shortcodes\\HookInterface' => __DIR__ . '/../..' . '/src/Shortcodes/HookInterface.php',
+        'DevDesigns\\WoocommerceCustomizations\\src\\HookInterface' => __DIR__ . '/../..' . '/src/HookInterface.php',
+        'DevDesigns\\WoocommerceCustomizations\\src\\LiveSearch\\Search' => __DIR__ . '/../..' . '/src/LiveSearch/Search.php',
         'DevDesigns\\WoocommerceCustomizations\\src\\Shortcodes\\ProductCategorySlider' => __DIR__ . '/../..' . '/src/Shortcodes/ProductCategorySlider.php',
     );
 

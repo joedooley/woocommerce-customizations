@@ -15,12 +15,13 @@
  * @version 3.4.0
  */
 
-use DevDesigns\WoocommerceCustomizations\Shortcodes\LiveSearch;
+use DevDesigns\WoocommerceCustomizations\src\LiveSearch\Search;
+
 
 
 defined( 'ABSPATH' ) || exit;
 
-$liveSearch = new LiveSearch();
+$liveSearch = new Search();
 $terms = $liveSearch->getProductCatTerms();
 $parentTerms = $liveSearch->getProductCatParentTerms();
 $childTerms = ! is_shop() ? $liveSearch->getProductCatChildTerms() : false;

@@ -1,14 +1,14 @@
 <?php
 
-namespace DevDesigns\WoocommerceCustomizations\Shortcodes;
+namespace DevDesigns\WoocommerceCustomizations\src\LiveSearch;
 
 use WP_Error;
 use WP_Query;
-use DevDesigns\WoocommerceCustomizations\src\Shortcodes\HookInterface;
+use DevDesigns\WoocommerceCustomizations\src\HookInterface;
 
 
 
-class LiveSearch implements HookInterface {
+class Search implements HookInterface {
 
 	/**
 	 * Product query reference.
@@ -68,7 +68,7 @@ class LiveSearch implements HookInterface {
 
 
 	/**
-	 * LiveSearch constructor.
+	 * Search constructor.
 	 *
 	 * @since 1.0.0
 	 */

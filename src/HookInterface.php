@@ -7,7 +7,7 @@
  * @since       1.0.0
  */
 
-namespace DevDesigns\WoocommerceCustomizations\src\Shortcodes;
+namespace DevDesigns\WoocommerceCustomizations\src;
 
 
 
