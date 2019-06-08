@@ -15,6 +15,7 @@ add_action( 'woocommerce_product_query', function ( WP_Query $q ): void {
 	$q->set( 'posts_per_page', - 1 );
 } );
 
+
 /**
  * Remove WooCommerce sorting dropdown.
  *

@@ -15,6 +15,8 @@
  * @since       1.0.0
  */
 
+use DevDesigns\WoocommerceCustomizations\LiveSearch\Customizer;
+
 
 
 /**
@@ -58,4 +60,11 @@ add_action( 'plugins_loaded', function (): void {
 	}
 
 	add_action( 'wp_enqueue_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::enqueue' );
+	// add_action( 'customize_preview_init', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::customizerScript' );
+	// add_action( 'customize_controls_enqueue_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::customizerScript' );
+
+	if ( class_exists( 'WP_Customize_Control' ) ) {
+		$customizer = new Customizer();
+		add_action( 'customize_register', [ $customizer, 'addSection' ] );
+	}
 } );

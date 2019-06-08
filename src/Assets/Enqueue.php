@@ -18,7 +18,7 @@ class Enqueue {
 	}
 
 
-	private static function styles(): void {
+	private static function styles (): void {
 		wp_register_style(
 			'woocommerce-customizations/flickity.css',
 			WOO_CUSTOMIZATIONS_URL . 'dist/styles/vendor/flickity.min.css',
@@ -51,7 +51,7 @@ class Enqueue {
 	}
 
 
-	private static function scripts(): void {
+	private static function scripts (): void {
 		$deps = is_shop() || is_product_taxonomy()
 			? [ 'woocommerce-customizations/flickity.js', 'woocommerce-customizations/isotope.js' ]
 			: [ 'woocommerce-customizations/flickity.js' ]
@@ -79,6 +79,17 @@ class Enqueue {
 			'woocommerce-customizations/main.js',
 			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/main.js',
 			$deps,
+			WOO_CUSTOMIZATIONS_VERSION,
+			true
+		);
+	}
+
+
+	public static function customizerScript (): void {
+		wp_enqueue_script(
+			'woocommerce-customizations/customizer.js',
+			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/customizer.js',
+			[ 'jquery', 'customize-controls', 'customize-preview' ],
 			WOO_CUSTOMIZATIONS_VERSION,
 			true
 		);

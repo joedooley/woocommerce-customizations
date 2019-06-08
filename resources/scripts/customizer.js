@@ -1,0 +1,2 @@
+(function (api) {
+})(wp.customize)
