@@ -22,6 +22,7 @@ class Customizer {
 	 */
 	public function addSection( WP_Customize_Manager $api ): void {
 		$settings = $this->settingsConfig();
+
 		$this->addSettings( $settings, $api );
 
 		$api->add_section(
@@ -37,23 +38,6 @@ class Customizer {
 		foreach ( $settings as $id => $label ) {
 			$this->addControl( $id, $label, $api );
 		}
-
-		if ( isset( $wp_customize->selective_refresh ) ) {
-			$api->selective_refresh->add_partial(
-				'wc_product_cats_heading', [
-					'selector'            => '.product-cats-heading',
-					'container_inclusive' => false,
-					'render_callback'     => function () {
-						echo __( get_option( 'wc_product_cats_heading', 'All Products' ) );
-					},
-				]
-			);
-		}
-
-		// d( '' );
-		// d( $api );
-		// d( $api->selective_refresh );
-		// d( $api->selective_refresh->partials() );
 	}
 
 
@@ -90,7 +74,6 @@ class Customizer {
 				[
 					'type' => 'option',
 					'default' => $default,
-					'transport' => 'postMessage',
 					'sanitize_callback' => 'wp_filter_nohtml_kses',
 				]
 			);

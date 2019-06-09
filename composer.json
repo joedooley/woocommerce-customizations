@@ -33,10 +33,7 @@
 		"psr-4": {
 			"DevDesigns\\WoocommerceCustomizations\\": "src/"
 		},
-		"files": [
-			"src/helpers.php",
-			"src/setup.php"
-		]
+		"files": [ "src/setup.php" ]
 	},
 	"extra": {
 		"installer-paths": {

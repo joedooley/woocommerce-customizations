@@ -23,7 +23,6 @@ if (url.parse(target).protocol === 'https:') {
  */
 mix
 	.js('resources/scripts/main.js', 'dist/scripts')
-	.js('resources/scripts/customizer.js', 'dist/scripts')
 	.sass('resources/styles/main.scss', 'dist/styles')
 	.copy('node_modules/flickity/dist/flickity.pkgd.min.js', 'dist/scripts/vendor')
 	.copy('node_modules/flickity/dist/flickity.min.css', 'dist/styles/vendor')

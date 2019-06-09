@@ -2,8 +2,8 @@
 
 namespace DevDesigns\WoocommerceCustomizations;
 
-use DevDesigns\WoocommerceCustomizations\Shortcodes\LiveSearch;
 use DevDesigns\WoocommerceCustomizations\src\Shortcodes\ProductCategorySlider;
+
 
 
 /**

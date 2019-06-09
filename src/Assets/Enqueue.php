@@ -83,15 +83,4 @@ class Enqueue {
 			true
 		);
 	}
-
-
-	public static function customizer (): void {
-		wp_enqueue_script(
-			'woocommerce-customizations/customizer.js',
-			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/customizer.js',
-			[ 'jquery', 'customize-preview' ],
-			WOO_CUSTOMIZATIONS_VERSION,
-			true
-		);
-	}
 }
