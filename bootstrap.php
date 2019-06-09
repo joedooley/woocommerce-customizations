@@ -55,13 +55,15 @@ if ( ! defined( 'WOO_CUSTOMIZATIONS_PATH' ) ) {
  * @since 1.0.0
  */
 add_action( 'plugins_loaded', function (): void {
+	// d( get_option( 'active_plugins' ) );
+
 	if ( ! class_exists( 'WooCommerce' ) || ! class_exists( 'WC_Quick_View' )) {
 		return;
 	}
 
 	add_action( 'wp_enqueue_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::enqueue' );
-	// add_action( 'customize_preview_init', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::customizerScript' );
-	// add_action( 'customize_controls_enqueue_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::customizerScript' );
+	add_action( 'customize_controls_print_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::customizer', 50 );
+	// add_action( 'customize_controls_enqueue_scripts', 'DevDesigns\WoocommerceCustomizations\Assets\Enqueue::customizer' );
 
 	if ( class_exists( 'WP_Customize_Control' ) ) {
 		$customizer = new Customizer();

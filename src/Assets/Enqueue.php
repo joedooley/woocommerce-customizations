@@ -85,11 +85,11 @@ class Enqueue {
 	}
 
 
-	public static function customizerScript (): void {
+	public static function customizer (): void {
 		wp_enqueue_script(
 			'woocommerce-customizations/customizer.js',
 			WOO_CUSTOMIZATIONS_URL . 'dist/scripts/customizer.js',
-			[ 'jquery', 'customize-controls', 'customize-preview' ],
+			[ 'jquery', 'customize-preview' ],
 			WOO_CUSTOMIZATIONS_VERSION,
 			true
 		);
