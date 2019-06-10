@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying the Isotope live search bar on product tax archives and shop archive.
+ * The template for displaying the Isotope filter toggle button.
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/search-isotope.php.
  *
@@ -19,21 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 
-<div class="wc-isotope-search-sort-container">
-	<?php wc_get_template( 'filter-toggle.php' ); ?>
-	<?php wc_get_template( 'search-input.php' ); ?>
-	<?php wc_get_template( 'filter-sort.php' ); ?>
+<div id="filter-toggle" class="toggle-filters">
+	<i id="menu-icon" class="fa fa-bars"></i>
+	<i id="arrow-icon" class="fa fa-caret-down"></i>
 </div>
-
-<div id="wc-isotope-mobile-container" class="wc-isotope-search-sort-container">
-	<?php wc_get_template( 'search-input.php' ); ?>
-
-	<div class="wrap">
-		<?php wc_get_template( 'filter-toggle.php' ); ?>
-		<?php wc_get_template( 'filter-sort.php' ); ?>
-	</div>
-</div>
-
-
-<?php wc_get_template( 'filters-isotope.php' ); ?>
-

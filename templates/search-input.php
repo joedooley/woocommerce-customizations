@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying the Isotope live search bar on product tax archives and shop archive.
+ * The template for displaying the Isotope live search input.
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/search-isotope.php.
  *
@@ -19,21 +19,9 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 
-<div class="wc-isotope-search-sort-container">
-	<?php wc_get_template( 'filter-toggle.php' ); ?>
-	<?php wc_get_template( 'search-input.php' ); ?>
-	<?php wc_get_template( 'filter-sort.php' ); ?>
+<div class="wc-isotope-search">
+	<label for="wc-isotope-search">
+		<input id="wc-isotope-search" class="search-input quicksearch" placeholder="Live Search ..." type="search"/>
+		<span class="clear" title="Click to clear input"></span>
+	</label>
 </div>
-
-<div id="wc-isotope-mobile-container" class="wc-isotope-search-sort-container">
-	<?php wc_get_template( 'search-input.php' ); ?>
-
-	<div class="wrap">
-		<?php wc_get_template( 'filter-toggle.php' ); ?>
-		<?php wc_get_template( 'filter-sort.php' ); ?>
-	</div>
-</div>
-
-
-<?php wc_get_template( 'filters-isotope.php' ); ?>
-

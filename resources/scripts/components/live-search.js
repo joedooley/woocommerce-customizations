@@ -86,39 +86,48 @@ const removeTag = id => {
 
 
 const initSearch = () => {
-	const clearButton = document.querySelector('.wc-isotope-search .clear')
-	const quicksearch = document.querySelector('#wc-isotope-search')
+	const clearButtons = document.querySelectorAll('.wc-isotope-search .clear')
+	const quicksearches = document.querySelectorAll('#wc-isotope-search')
 
-	if (!quicksearch || !clearButton) {
+	if (!quicksearches || !quicksearches.length || !clearButtons || !clearButtons.length) {
 		return
 	}
 
-	quicksearch.addEventListener('keyup', debounce(() => {
-		filters['search'] = quicksearch.value.toLowerCase()
+	quicksearches.forEach(quicksearch => {
+		quicksearch.addEventListener('keyup', debounce(() => {
+			filters['search'] = quicksearch.value.toLowerCase()
 
-		runFilter()
-	}, 200))
+			runFilter()
+		}, 200))
+	})
 
-	clearButton.addEventListener('click', () => {
-		quicksearch.value = ''
-		filters['search'] = ''
+	clearButtons.forEach(clearButton => {
+		clearButton.addEventListener('click', () => {
+			quicksearches.forEach(quicksearch => {
+				quicksearch.value = ''
+			})
 
-		runFilter()
+			filters['search'] = ''
+
+			runFilter()
+		})
 	})
 }
 
 
 const initSort = () => {
-	const select = document.querySelector('#wc-isotope-sort')
+	const selects = document.querySelectorAll('#wc-isotope-sort')
 
-	if (!select) {
+	if (!selects || !selects.length) {
 		return
 	}
 
-	select.addEventListener('change', event => {
-		const sortValue = event.target.value
+	selects.forEach(select => {
+		select.addEventListener('change', event => {
+			const sortValue = event.target.value
 
-		isotope.arrange({ sortBy: sortValue })
+			isotope.arrange({ sortBy: sortValue })
+		})
 	})
 
 	MatchHeight.update()
@@ -210,30 +219,32 @@ const toggleIsCheckedClass = () => {
 
 
 const toggleIsHiddenClassForFilters = () => {
-	const toggle = document.querySelector('#filter-toggle')
+	const toggles = document.querySelectorAll('#filter-toggle')
 
-	if (!toggle) {
+	if (!toggles || !toggles.length) {
 		return
 	}
 
-	toggle.addEventListener('click', function (event) {
-		const target = document.querySelector('.wc-isotope-filters')
+	toggles.forEach(toggle => {
+		toggle.addEventListener('click', function (event) {
+			const target = document.querySelector('.wc-isotope-filters')
 
-		event.preventDefault()
+			event.preventDefault()
 
-		this.__toggle = !this.__toggle
+			this.__toggle = !this.__toggle
 
-		if (!target) {
-			return
-		}
+			if (!target) {
+				return
+			}
 
-		if (this.__toggle) {
-			target.classList.remove('is-hidden')
-			this.classList.add('active')
-		} else {
-			target.classList.add('is-hidden')
-			this.classList.remove('active')
-		}
+			if (this.__toggle) {
+				target.classList.remove('is-hidden')
+				this.classList.add('active')
+			} else {
+				target.classList.add('is-hidden')
+				this.classList.remove('active')
+			}
+		})
 	})
 }
 

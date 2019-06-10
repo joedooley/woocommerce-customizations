@@ -1,6 +1,6 @@
 .wc-isotope-search-sort-container {
 	align-items: flex-start;
-	display: flex;
+	display: none;
 	flex-direction: column;
 	justify-content: space-between;
 	margin-bottom: 30px;
@@ -8,6 +8,7 @@
 
 	@media (min-width: 768px) {
 		align-items: center;
+		display: flex;
 		flex-direction: row;
 	}
 
@@ -52,6 +53,25 @@
 			&:first-child {
 				margin-right: 10px;
 			}
+		}
+	}
+}
+
+#wc-isotope-mobile-container {
+	display: flex;
+
+	@media (min-width: 768px) {
+		display: none;
+	}
+
+	.wrap {
+		display: flex;
+		margin-top: 1em;
+		justify-content: space-between;
+		width: 100%;
+
+		div:last-child {
+			margin-top: 0;
 		}
 	}
 }
@@ -227,9 +247,12 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-start;
-	margin-bottom: 50px;
 	margin-top: 25px;
 	padding: 20px 0;
+
+	@media (min-width: 768px) {
+		margin-bottom: 50px;
+	}
 
 	a {
 		background-color: $grey5;
@@ -256,5 +279,11 @@
 			color: $white1;
 			margin-left: 15px;
 		}
+	}
+}
+
+.post-type-archive {
+	.woocommerce-products-header {
+		margin-bottom: 50px;
 	}
 }
