@@ -21,6 +21,10 @@ use DevDesigns\WoocommerceCustomizations\src\LiveSearch\Search;
 
 defined( 'ABSPATH' ) || exit;
 
+if ( is_admin() ) {
+	return;
+}
+
 $liveSearch = new Search();
 $terms = $liveSearch->getProductCatTerms();
 $parentTerms = $liveSearch->getProductCatParentTerms();
