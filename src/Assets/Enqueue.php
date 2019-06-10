@@ -40,7 +40,7 @@ class Enqueue {
 			WOO_CUSTOMIZATIONS_VERSION
 		);
 
-		if ( is_shop() || is_product_taxonomy() || is_product() ) {
+		if ( defined( 'OXYGEN_IFRAME' ) || defined( 'SHOW_CT_BUILDER' ) || is_shop() || is_product_taxonomy() || is_product() ) {
 			wp_enqueue_style(
 				'woocommerce-customizations/overrides.css',
 				WOO_CUSTOMIZATIONS_URL . 'dist/styles/overrides.css',
@@ -52,12 +52,12 @@ class Enqueue {
 
 
 	private static function scripts (): void {
-		$deps = is_shop() || is_product_taxonomy()
+		$deps = defined( 'OXYGEN_IFRAME' ) || defined( 'SHOW_CT_BUILDER' ) || is_shop() || is_product_taxonomy()
 			? [ 'woocommerce-customizations/flickity.js', 'woocommerce-customizations/isotope.js' ]
 			: [ 'woocommerce-customizations/flickity.js' ]
 		;
 
-		if ( is_shop() || is_product_taxonomy() ) {
+		if ( defined( 'OXYGEN_IFRAME' ) || defined( 'SHOW_CT_BUILDER' ) || is_shop() || is_product_taxonomy() ) {
 			wp_enqueue_script(
 				'woocommerce-customizations/isotope.js',
 				WOO_CUSTOMIZATIONS_URL . 'dist/scripts/vendor/isotope.pkgd.min.js',

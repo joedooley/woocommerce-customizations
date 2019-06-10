@@ -44,3 +44,16 @@ add_filter( 'woocommerce_locate_template', function ( $template, $template_name,
 	// Return what we found.
 	return $template;
 }, 10, 3 );
+
+
+/**
+ * Add woocommerce body class in oxygen editor. This fixed WooCommerce CSS.
+ *
+ * @since 1.0.0
+ */
+add_filter( 'body_class', function ( array $classes ): array {
+	return defined( 'OXYGEN_IFRAME' ) || defined( 'SHOW_CT_BUILDER' )
+		? array_merge( $classes, [ 'woocommerce' ] )
+		: $classes
+	;
+} );

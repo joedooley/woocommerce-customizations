@@ -6,7 +6,8 @@
  * Author:       Developing Designs
  * Author URI:   https://developingdesigns.com/
  * Version:      1.0.0
- * Tested up to: 5.1.1
+ * Tested up to: 5.2
+ * WC tested up to: 3.6.4
  * Text Domain:  wc-customizations
  * Domain Path:  /lang
  *
